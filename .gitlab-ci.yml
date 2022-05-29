@@ -1,0 +1,49 @@
+stages:
+- build-artifact
+- build-image
+- deploy
+build-jar:
+  image: openjdk:11-jdk
+  stage: build-artifact
+  before_script:
+    - chmod +x ./mvnw
+    - if [ -z "$CI_COMMIT_TAG" ]; then VERSION="$TIMESTAMP-${CI_COMMIT_SHA:0:8}"; else VERSION=$CI_COMMIT_TAG; fi
+    - cd ./src/frontend 
+    - export REACT_APP_VERSION=$VERSION
+    - cd ../../
+  script:
+    - ./mvnw clean install -DskipTests
+  artifacts:
+    paths:
+      - target/*.jar
+  only:
+    - tags
+build-image:
+  image: docker:latest
+  services:
+    - docker:dind
+  stage: build-image
+  dependencies: 
+    - build-jar
+  before_script:
+    - docker login -u $DOCKERHUB_LOGIN -p $DOCKERHUB_KEY
+  script:
+    - docker build -t fil1ip/clinic-system .
+    - docker push fil1ip/clinic-system
+  only:
+    - tags
+deploy:
+  image: docker:latest
+  stage: deploy
+  before_script:
+    - 'command -v ssh-agent >/dev/null || ( apk add --update openssh )' 
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan $VM_IPADDRESS >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - ssh $SSH_USER@$VM_IPADDRESS "cd ../srv/clinic-system/ && docker-compose stop && docker-compose pull && docker-compose up -d"
+  only:
+    - tags
