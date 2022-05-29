@@ -11,10 +11,10 @@
     <groupId>com.czarnecki</groupId>
     <artifactId>clinic-system</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>spring-boot-core</name>
-    <description>spring-boot-core</description>
+    <name>clinic-service-system</name>
+    <description>clinic-service-system-clean-architecture</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
     </properties>
     <dependencies>
         <dependency>

@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ClinicServiceSystem {
+public class ClinicServiceSystemCleanArchitecture {
 
   public static void main(String[] args) {
-    SpringApplication.run(ClinicServiceSystem.class, args);
+    SpringApplication.run(ClinicServiceSystemCleanArchitecture.class, args);
   }
 
 }
