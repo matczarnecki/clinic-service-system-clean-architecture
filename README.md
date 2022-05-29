@@ -1,9 +1,13 @@
-# Clinic Service System
+# Clinic Service System - Clean Architecture
 
-A project created in order to pass a university programming class.
-It manages visits to a medical clinic.
+## Goals 
 
-## Original repo
+The main goal of this project is to learn and implement pure architecture (hexagonal architecture)
+for my previous application.
 
-this project was migrated from the original repo on GitLab:
-https://gitlab.com/mateusz_czarnecki/clinic-service-system
+In the future I am going to add tests and redux to the frontend layer.
+
+## Original project
+
+The original version of the app can be found under:
+https://github.com/matczarnecki/clinic-service-system
