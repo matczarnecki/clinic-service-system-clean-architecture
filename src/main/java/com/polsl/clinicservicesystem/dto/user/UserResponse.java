@@ -37,7 +37,7 @@ public class UserResponse {
     return id;
   }
 
-  public void setId(Integer id) {
+  void setId(Integer id) {
     this.id = id;
   }
 
@@ -45,7 +45,7 @@ public class UserResponse {
     return username;
   }
 
-  public void setUsername(String username) {
+  void setUsername(String username) {
     this.username = username;
   }
 
@@ -53,7 +53,7 @@ public class UserResponse {
     return email;
   }
 
-  public void setEmail(String email) {
+  void setEmail(String email) {
     this.email = email;
   }
 
@@ -61,7 +61,7 @@ public class UserResponse {
     return isActive;
   }
 
-  public void setActive(boolean active) {
+  void setActive(boolean active) {
     isActive = active;
   }
 
@@ -69,7 +69,7 @@ public class UserResponse {
     return role;
   }
 
-  public void setRole(String role) {
+  void setRole(String role) {
     this.role = role;
   }
 
@@ -77,7 +77,7 @@ public class UserResponse {
     return firstName;
   }
 
-  public void setFirstName(String firstName) {
+  void setFirstName(String firstName) {
     this.firstName = firstName;
   }
 
@@ -85,7 +85,7 @@ public class UserResponse {
     return lastName;
   }
 
-  public void setLastName(String lastName) {
+  void setLastName(String lastName) {
     this.lastName = lastName;
   }
 
@@ -93,7 +93,7 @@ public class UserResponse {
     return isBlocked;
   }
 
-  public void setBlocked(final boolean blocked) {
+  void setBlocked(final boolean blocked) {
     isBlocked = blocked;
   }
 }

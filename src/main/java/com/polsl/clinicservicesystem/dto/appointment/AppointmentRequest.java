@@ -21,7 +21,7 @@ public class AppointmentRequest {
     return appointmentTime;
   }
 
-  public void setAppointmentTime(LocalDateTime appointmentTime) {
+  void setAppointmentTime(LocalDateTime appointmentTime) {
     this.appointmentTime = appointmentTime;
   }
 
@@ -29,7 +29,7 @@ public class AppointmentRequest {
     return doctorId;
   }
 
-  public void setDoctorId(Integer doctorId) {
+  void setDoctorId(Integer doctorId) {
     this.doctorId = doctorId;
   }
 
@@ -37,7 +37,7 @@ public class AppointmentRequest {
     return patientId;
   }
 
-  public void setPatientId(Integer patientId) {
+  void setPatientId(Integer patientId) {
     this.patientId = patientId;
   }
 }

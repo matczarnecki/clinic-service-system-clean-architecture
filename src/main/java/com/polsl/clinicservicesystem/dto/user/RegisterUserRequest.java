@@ -26,7 +26,7 @@ public class RegisterUserRequest {
     return username;
   }
 
-  public void setUsername(String username) {
+  void setUsername(String username) {
     this.username = username;
   }
 
@@ -34,7 +34,7 @@ public class RegisterUserRequest {
     return password;
   }
 
-  public void setPassword(String password) {
+  void setPassword(String password) {
     this.password = password;
   }
 
@@ -42,7 +42,7 @@ public class RegisterUserRequest {
     return email;
   }
 
-  public void setEmail(String email) {
+  void setEmail(String email) {
     this.email = email;
   }
 
@@ -50,7 +50,7 @@ public class RegisterUserRequest {
     return role;
   }
 
-  public void setRole(String role) {
+  void setRole(String role) {
     this.role = role;
   }
 
@@ -58,7 +58,7 @@ public class RegisterUserRequest {
     return firstName;
   }
 
-  public void setFirstName(String firstName) {
+  void setFirstName(String firstName) {
     this.firstName = firstName;
   }
 

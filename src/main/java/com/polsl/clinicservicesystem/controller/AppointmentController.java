@@ -22,26 +22,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/v1/api/appointments")
-public class AppointmentController {
+class AppointmentController {
   private final AppointmentService appointmentService;
 
-  public AppointmentController(AppointmentService appointmentService) {
+  AppointmentController(AppointmentService appointmentService) {
     this.appointmentService = appointmentService;
   }
 
   @GetMapping()
   @PreAuthorize("hasAuthority('CAN_SEE_APPOINTMENTS')")
-  public ResponseEntity<?> getAppointments(@RequestParam(name = "date", required = true)
-                                           @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                                               LocalDate date,
+  ResponseEntity<?> getAppointments(@RequestParam(name = "date")
+                                    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
                                            @RequestParam(name = "doctor", required = false) Integer doctorId) {
     return ResponseEntity.ok(appointmentService.getAppointmentsForDay(date, null));
   }
 
   @GetMapping("/doctor")
   @PreAuthorize("hasAuthority('CAN_SEE_FULL_APPOINTMENTS')")
-  public ResponseEntity<?> getDoctorAppointments(@RequestParam(name = "date", required = true)
-                                                 @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+  ResponseEntity<?> getDoctorAppointments(@RequestParam(name = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
                                                      LocalDate date, Authentication auth) {
     CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
     return ResponseEntity.ok(appointmentService.getDoctorAppointmentsForDay(date, user.getId()));
@@ -50,34 +48,33 @@ public class AppointmentController {
 
   @DeleteMapping("/{id}")
   @PreAuthorize("hasAuthority('CAN_CANCEL_APPOINTMENTS')")
-  public ResponseEntity<?> cancelAppointment(@PathVariable Integer id) {
+  ResponseEntity<?> cancelAppointment(@PathVariable Integer id) {
     appointmentService.cancelAppointment(id);
     return ResponseEntity.ok("The appointment was cancelled!");
   }
 
   @PostMapping()
   @PreAuthorize("hasAuthority('CAN_ADD_APPOINTMENTS')")
-  public ResponseEntity<?> addAppointment(@RequestBody @Valid AppointmentRequest request) {
+  ResponseEntity<?> addAppointment(@RequestBody @Valid AppointmentRequest request) {
     appointmentService.createAppointment(request);
     return ResponseEntity.ok("The appointment was scheduled!");
   }
 
   @GetMapping("/{id}")
   @PreAuthorize("hasAuthority('CAN_SEE_FULL_APPOINTMENTS')")
-  public ResponseEntity<?> getAppointment(@PathVariable Integer id) {
+  ResponseEntity<?> getAppointment(@PathVariable Integer id) {
     return ResponseEntity.ok(appointmentService.getAppointment(id));
   }
 
   @GetMapping("/patient/{appointmentId}")
   @PreAuthorize("hasAuthority('CAN_SEE_PATIENT_APPOINTMENTS')")
-  public ResponseEntity<?> getPatientAppointments(@PathVariable Integer appointmentId) {
+  ResponseEntity<?> getPatientAppointments(@PathVariable Integer appointmentId) {
     return ResponseEntity.ok(appointmentService.getPatientAppointments(appointmentId));
   }
 
   @PatchMapping("/{id}")
   @PreAuthorize("hasAuthority('CAN_MAKE_APPOINTMENTS')")
-  public ResponseEntity<?> makeAppointment(@PathVariable Integer id,
-                                           @RequestBody @Valid MakeAppointmentRequest request) {
+  ResponseEntity<?> makeAppointment(@PathVariable Integer id, @RequestBody @Valid MakeAppointmentRequest request) {
     appointmentService.makeAppointment(id, request);
     return ResponseEntity.ok("The appointment has been finished!");
   }

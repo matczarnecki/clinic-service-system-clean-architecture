@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/v1/api/authentication")
-public class AuthenticationController {
+class AuthenticationController {
 
   private final AuthenticationManager authenticationManager;
   private final CustomUserDetailsService customUserDetailsService;
   private final UserService userService;
   private final JwtUtility jwtUtility;
 
-  public AuthenticationController(AuthenticationManager authenticationManager,
+  AuthenticationController(AuthenticationManager authenticationManager,
                                   CustomUserDetailsService customUserDetailsService,
                                   final UserService userService, JwtUtility jwtUtility) {
     this.authenticationManager = authenticationManager;
@@ -36,10 +36,10 @@ public class AuthenticationController {
   }
 
   @PostMapping
-  public ResponseEntity<?> authenticateUser(@Valid @RequestBody AuthenticationRequest request) {
+  ResponseEntity<?> authenticateUser(@Valid @RequestBody AuthenticationRequest request) {
     try {
       authenticationManager.authenticate(
-          new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+              new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
     } catch (BadCredentialsException e) {
       userService.handleFailedAuthentication(request.getUsername());
       throw new BadRequestException("Incorrect username or password", e);

@@ -11,7 +11,7 @@ public class RolesService {
 
   private final RoleRepository roleRepository;
 
-  public RolesService(RoleRepository roleRepository) {
+  RolesService(RoleRepository roleRepository) {
     this.roleRepository = roleRepository;
   }
 

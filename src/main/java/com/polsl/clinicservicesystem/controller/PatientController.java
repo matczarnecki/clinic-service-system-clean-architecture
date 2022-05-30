@@ -13,22 +13,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/v1/api/patients")
-public class PatientController {
+class PatientController {
   private PatientService patientService;
 
-  public PatientController(PatientService patientService) {
+  PatientController(PatientService patientService) {
     this.patientService = patientService;
   }
 
   @GetMapping
   @PreAuthorize("hasAuthority('CAN_SEE_PATIENTS')")
-  public ResponseEntity<?> getPatients() {
+  ResponseEntity<?> getPatients() {
     return ResponseEntity.ok(patientService.getPatients());
   }
 
   @PostMapping
   @PreAuthorize("hasAuthority('CAN_ADD_PATIENTS')")
-  public ResponseEntity<?> addPatient(@RequestBody @Valid PatientRequestResponse request) {
+  ResponseEntity<?> addPatient(@RequestBody @Valid PatientRequestResponse request) {
     patientService.addPatient(request);
     return ResponseEntity.ok("Patient has been created!");
   }

@@ -23,7 +23,7 @@ public class AppointmentService {
   private final UserRepository userRepository;
   private final PatientRepository patientRepository;
 
-  public AppointmentService(AppointmentRepository appointmentRepository,
+  AppointmentService(AppointmentRepository appointmentRepository,
                             UserRepository userRepository,
                             PatientRepository patientRepository) {
     this.appointmentRepository = appointmentRepository;

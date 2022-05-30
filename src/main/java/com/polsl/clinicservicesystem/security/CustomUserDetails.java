@@ -17,7 +17,7 @@ public class CustomUserDetails implements UserDetails {
   private final boolean isActive;
   private final Collection<? extends GrantedAuthority> authorities;
 
-  public CustomUserDetails(UserEntity user) {
+  CustomUserDetails(UserEntity user) {
 
     final Set<GrantedAuthority> userAuthorities =
         user.getRole().getAuthorities()

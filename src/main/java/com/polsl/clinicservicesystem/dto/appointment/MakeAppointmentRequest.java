@@ -17,7 +17,7 @@ public class MakeAppointmentRequest {
     return diagnosis;
   }
 
-  public void setDiagnosis(String diagnosis) {
+  void setDiagnosis(String diagnosis) {
     this.diagnosis = diagnosis;
   }
 
@@ -25,7 +25,7 @@ public class MakeAppointmentRequest {
     return description;
   }
 
-  public void setDescription(String description) {
+  void setDescription(String description) {
     this.description = description;
   }
 }

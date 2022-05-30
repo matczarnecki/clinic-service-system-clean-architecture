@@ -20,62 +20,62 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/v1/api/users")
-public class UserController {
+class UserController {
 
   private final UserService userService;
 
-  public UserController(UserService userService) {
+  UserController(UserService userService) {
     this.userService = userService;
   }
 
   @PostMapping("/registration")
-  public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterUserRequest request) {
+  ResponseEntity<?> registerUser(@Valid @RequestBody RegisterUserRequest request) {
     userService.registerNewUser(request);
     return ResponseEntity.ok("Successful registration");
   }
 
   @GetMapping
   @PreAuthorize("hasAuthority('CAN_SEE_USERS')")
-  public List<?> getUsers() {
+  List<?> getUsers() {
     return userService.getUsers();
   }
 
   @GetMapping("/{id}")
   @PreAuthorize("hasAuthority('CAN_SEE_USERS')")
-  public ResponseEntity<?> getUser(@PathVariable Integer id) {
+  ResponseEntity<?> getUser(@PathVariable Integer id) {
     return ResponseEntity.ok(userService.getUser(id));
   }
 
   @GetMapping("/me")
-  public ResponseEntity<?> getLoggedUser(Authentication auth) {
+  ResponseEntity<?> getLoggedUser(Authentication auth) {
     CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
     return ResponseEntity.ok(userService.getUser(user.getId()));
   }
 
   @PatchMapping("/{id}")
   @PreAuthorize("hasAuthority('CAN_EDIT_USERS')")
-  public ResponseEntity<?> editUser(@PathVariable Integer id, @RequestBody @Valid EditUserRequest request) {
+  ResponseEntity<?> editUser(@PathVariable Integer id, @RequestBody @Valid EditUserRequest request) {
     userService.editUser(id, request);
     return ResponseEntity.ok("User has been modified");
   }
 
   @DeleteMapping("/{id}")
   @PreAuthorize("hasAuthority('CAN_EDIT_USERS')")
-  public ResponseEntity<?> disableUser(@PathVariable Integer id) {
+  ResponseEntity<?> disableUser(@PathVariable Integer id) {
     userService.disableUser(id);
     return ResponseEntity.ok("User has been disabled!");
   }
 
   @PatchMapping("{id}/unlock")
   @PreAuthorize("hasAuthority('CAN_EDIT_USERS')")
-  public ResponseEntity<?> unlockAccount(@PathVariable Integer id) {
+  ResponseEntity<?> unlockAccount(@PathVariable Integer id) {
     userService.unlockAccount(id);
     return ResponseEntity.ok("Account has been unlocked!");
   }
 
   @GetMapping("/doctors")
   @PreAuthorize("hasAuthority('CAN_SEE_DOCTORS')")
-  public List<?> getDoctors() {
+  List<?> getDoctors() {
     return userService.getDoctors();
   }
 }

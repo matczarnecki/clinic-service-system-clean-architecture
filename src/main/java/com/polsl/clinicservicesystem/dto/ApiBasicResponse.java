@@ -14,7 +14,7 @@ public class ApiBasicResponse {
     return success;
   }
 
-  public void setSuccess(Boolean success) {
+  void setSuccess(Boolean success) {
     this.success = success;
   }
 
@@ -22,7 +22,7 @@ public class ApiBasicResponse {
     return message;
   }
 
-  public void setMessage(String message) {
+  void setMessage(String message) {
     this.message = message;
   }
 }

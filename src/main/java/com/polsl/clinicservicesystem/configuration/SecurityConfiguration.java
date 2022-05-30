@@ -22,7 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(
     prePostEnabled = true
 )
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   private static final String[] URL_WHITELIST = {
       "/v1/api/authentication",
@@ -40,7 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   private final JwtRequestFilter jwtRequestFilter;
   private final JwtAuthenticationEntryPoint unauthorizedHandler;
 
-  public SecurityConfiguration(CustomUserDetailsService customUserDetailsService,
+  SecurityConfiguration(CustomUserDetailsService customUserDetailsService,
                                JwtRequestFilter jwtRequestFilter,
                                JwtAuthenticationEntryPoint unauthorizedHandler) {
     this.customUserDetailsService = customUserDetailsService;
@@ -82,7 +82,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   }
 
   @Bean
-  public PasswordEncoder passwordEncoder() {
+  PasswordEncoder passwordEncoder() {
     return new Pbkdf2PasswordEncoder(passwordEncoderKey, 100000, 32);
   }
 }

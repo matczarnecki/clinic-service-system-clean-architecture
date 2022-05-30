@@ -9,17 +9,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/v1/api/roles")
-public class RolesController {
+class RolesController {
 
   private final RolesService rolesService;
 
-  public RolesController(RolesService rolesService) {
+  RolesController(RolesService rolesService) {
     this.rolesService = rolesService;
   }
 
   @GetMapping()
   @PreAuthorize("hasAuthority('CAN_SEE_ROLES')")
-  public ResponseEntity<?> getRoles() {
+  ResponseEntity<?> getRoles() {
     return ResponseEntity.ok(rolesService.getRoles());
   }
 }

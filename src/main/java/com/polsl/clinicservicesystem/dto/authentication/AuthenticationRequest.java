@@ -17,7 +17,7 @@ public class AuthenticationRequest {
     return username;
   }
 
-  public void setUsername(String username) {
+  void setUsername(String username) {
     this.username = username;
   }
 
@@ -25,7 +25,7 @@ public class AuthenticationRequest {
     return password;
   }
 
-  public void setPassword(String password) {
+  void setPassword(String password) {
     this.password = password;
   }
 }

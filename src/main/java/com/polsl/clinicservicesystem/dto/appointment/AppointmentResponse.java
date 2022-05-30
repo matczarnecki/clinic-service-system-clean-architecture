@@ -17,7 +17,7 @@ public class AppointmentResponse {
     return id;
   }
 
-  public void setId(Integer id) {
+  void setId(Integer id) {
     this.id = id;
   }
 
@@ -25,7 +25,7 @@ public class AppointmentResponse {
     return appointmentTime;
   }
 
-  public void setAppointmentTime(LocalDateTime appointmentTime) {
+  void setAppointmentTime(LocalDateTime appointmentTime) {
     this.appointmentTime = appointmentTime;
   }
 
@@ -33,7 +33,7 @@ public class AppointmentResponse {
     return doctor;
   }
 
-  public void setDoctor(UserResponse doctor) {
+  void setDoctor(UserResponse doctor) {
     this.doctor = doctor;
   }
 
@@ -41,7 +41,7 @@ public class AppointmentResponse {
     return patient;
   }
 
-  public void setPatient(PatientRequestResponse patient) {
+  void setPatient(PatientRequestResponse patient) {
     this.patient = patient;
   }
 
@@ -49,7 +49,7 @@ public class AppointmentResponse {
     return status;
   }
 
-  public void setStatus(AppointmentStatus status) {
+  void setStatus(AppointmentStatus status) {
     this.status = status;
   }
 

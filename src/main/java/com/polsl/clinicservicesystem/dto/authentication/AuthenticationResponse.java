@@ -12,7 +12,7 @@ public class AuthenticationResponse {
     return   jwt;
   }
 
-  public void setJwt(String jwt) {
+  void setJwt(String jwt) {
     this.jwt = jwt;
   }
 }

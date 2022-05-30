@@ -10,7 +10,7 @@ public class RoleResponse {
     return code;
   }
 
-  public void setCode(String code) {
+  void setCode(String code) {
     this.code = code;
   }
 
@@ -18,7 +18,7 @@ public class RoleResponse {
     return name;
   }
 
-  public void setName(String name) {
+  void setName(String name) {
     this.name = name;
   }
 
