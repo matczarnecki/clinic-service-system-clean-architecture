@@ -2,8 +2,8 @@
 
 ## Goals 
 
-The main goal of this project is to learn and implement pure architecture (hexagonal architecture)
-for my previous application.
+The main goal of this project is to learn and implement a clean architecture (hexagonal architecture)
+for my previous application that I developed with my teammates to pass the university classes.
 
 In the future I am going to add tests and redux to the frontend layer.
 
