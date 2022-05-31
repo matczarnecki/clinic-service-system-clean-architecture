@@ -5,7 +5,7 @@ import java.util.Set;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface UserRepository extends CrudRepository<User, Integer> {
+interface UserRepository extends CrudRepository<User, Integer> {
 
   Optional<User> findByUsername(String username);
 

@@ -8,7 +8,8 @@ import com.czarnecki.clinicservicesystem.patient.Patient;
 import com.czarnecki.clinicservicesystem.patient.PatientFacade;
 import com.czarnecki.clinicservicesystem.user.User;
 import com.czarnecki.clinicservicesystem.exception.BadRequestException;
-import com.czarnecki.clinicservicesystem.user.UserRepository;
+import com.czarnecki.clinicservicesystem.user.UserFacade;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,14 +18,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class AppointmentFacade {
   private final AppointmentRepository appointmentRepository;
-  private final UserRepository userRepository;
+  private final UserFacade userFacade;
   private final PatientFacade patientFacade;
 
   AppointmentFacade(final AppointmentRepository appointmentRepository,
-                    final UserRepository userRepository,
+                    final UserFacade userFacade,
                     final PatientFacade patientFacade) {
     this.appointmentRepository = appointmentRepository;
-    this.userRepository = userRepository;
+    this.userFacade = userFacade;
     this.patientFacade = patientFacade;
   }
 
@@ -61,7 +62,7 @@ public class AppointmentFacade {
   }
 
   void createAppointment(AppointmentRequest request) {
-    User doctor = userRepository.findById(request.getDoctorId())
+    User doctor = userFacade.findById(request.getDoctorId())
         .orElseThrow(() -> new BadRequestException("Doctor with id: " + request.getDoctorId() + " was not found"));
 
     Patient patient = patientFacade.findById(request.getPatientId())

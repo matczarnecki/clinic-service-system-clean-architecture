@@ -1,7 +1,7 @@
 package com.czarnecki.clinicservicesystem.auth;
 
 import com.czarnecki.clinicservicesystem.exception.BadRequestException;
-import com.czarnecki.clinicservicesystem.user.UserService;
+import com.czarnecki.clinicservicesystem.user.UserFacade;
 
 import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +20,12 @@ class AuthenticationController {
 
   private final AuthenticationManager authenticationManager;
   private final CustomUserDetailsService customUserDetailsService;
-  private final UserService userService;
+  private final UserFacade userService;
   private final JwtUtility jwtUtility;
 
   AuthenticationController(AuthenticationManager authenticationManager,
-                                  CustomUserDetailsService customUserDetailsService,
-                                  final UserService userService, JwtUtility jwtUtility) {
+                           CustomUserDetailsService customUserDetailsService,
+                           final UserFacade userService, JwtUtility jwtUtility) {
     this.authenticationManager = authenticationManager;
     this.customUserDetailsService = customUserDetailsService;
     this.userService = userService;

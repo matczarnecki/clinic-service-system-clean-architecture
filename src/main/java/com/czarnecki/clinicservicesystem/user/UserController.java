@@ -22,9 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/api/users")
 class UserController {
 
-  private final UserService userService;
+  private final UserFacade userService;
 
-  UserController(UserService userService) {
+  UserController(final UserFacade userService) {
     this.userService = userService;
   }
 

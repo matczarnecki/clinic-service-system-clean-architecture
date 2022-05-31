@@ -1,6 +1,5 @@
 package com.czarnecki.clinicservicesystem.auth;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,7 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -30,25 +28,28 @@ class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       "manifest.json"
   };
 
-  @Value("${app.passwordEncoderKey}")
-  private String passwordEncoderKey;
+//  @Value("${app.passwordEncoderKey}")
+//  private String passwordEncoderKey;
 
   private final CustomUserDetailsService customUserDetailsService;
   private final JwtRequestFilter jwtRequestFilter;
   private final JwtAuthenticationEntryPoint unauthorizedHandler;
+  private final PasswordEncoder passwordEncoder;
 
-  SecurityConfiguration(CustomUserDetailsService customUserDetailsService,
-                               JwtRequestFilter jwtRequestFilter,
-                               JwtAuthenticationEntryPoint unauthorizedHandler) {
+  SecurityConfiguration(final CustomUserDetailsService customUserDetailsService,
+                        final JwtRequestFilter jwtRequestFilter,
+                        final JwtAuthenticationEntryPoint unauthorizedHandler,
+                        final PasswordEncoder passwordEncoder) {
     this.customUserDetailsService = customUserDetailsService;
     this.jwtRequestFilter = jwtRequestFilter;
     this.unauthorizedHandler = unauthorizedHandler;
+    this.passwordEncoder = passwordEncoder;
   }
 
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     auth.userDetailsService(customUserDetailsService)
-        .passwordEncoder(passwordEncoder());
+        .passwordEncoder(passwordEncoder);
   }
 
   @Override
@@ -78,8 +79,8 @@ class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     return super.authenticationManagerBean();
   }
 
-  @Bean
-  PasswordEncoder passwordEncoder() {
-    return new Pbkdf2PasswordEncoder(passwordEncoderKey, 100000, 32);
-  }
+//  @Bean
+//  PasswordEncoder passwordEncoder() {
+//    return new Pbkdf2PasswordEncoder(passwordEncoderKey, 100000, 32);
+//  }
 }

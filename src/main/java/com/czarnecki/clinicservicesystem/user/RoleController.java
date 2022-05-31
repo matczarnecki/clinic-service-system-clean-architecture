@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/v1/api/roles")
-class RolesController {
+class RoleController {
 
-  private final RolesService rolesService;
+  private final RoleFacade rolesService;
 
-  RolesController(RolesService rolesService) {
+  RoleController(RoleFacade rolesService) {
     this.rolesService = rolesService;
   }
 

@@ -6,6 +6,7 @@ import com.czarnecki.clinicservicesystem.user.dto.UserResponse;
 import com.czarnecki.clinicservicesystem.exception.BadRequestException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
@@ -13,17 +14,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService {
+public class UserFacade {
 
   private final UserRepository userRepository;
-  private final RoleRepository roleRepository;
+  private final RoleFacade roleFacade;
   private final PasswordEncoder passwordEncoder;
+
 
   private final int maxNumberOfFailedLogins = 3;
 
-  UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+  UserFacade(final UserRepository userRepository,
+             final RoleFacade roleFacade,
+             final PasswordEncoder passwordEncoder) {
     this.userRepository = userRepository;
-    this.roleRepository = roleRepository;
+    this.roleFacade = roleFacade;
     this.passwordEncoder = passwordEncoder;
   }
 
@@ -37,7 +41,7 @@ public class UserService {
       throw new BadRequestException("User with this email address already exists");
     }
 
-    Role role = roleRepository.findById(request.getRole()).orElseThrow(() -> {
+    Role role = roleFacade.findById(request.getRole()).orElseThrow(() -> {
       throw new BadRequestException("Role provided for user doesn't exist");
     });
 
@@ -49,6 +53,14 @@ public class UserService {
     newUser.setFirstName(request.getFirstName());
     newUser.setLastName(request.getLastName());
     userRepository.save(newUser);
+  }
+
+  public Optional<User> findById(int userId) {
+    return userRepository.findById(userId);
+  }
+
+  public Optional<User> findByUsername(String username) {
+      return userRepository.findByUsername(username);
   }
 
   public List<?> getUsers() {
