@@ -44,7 +44,7 @@ public class Appointment {
     return id;
   }
 
-  public void setId(Integer id) {
+  void setId(Integer id) {
     this.id = id;
   }
 
@@ -52,7 +52,7 @@ public class Appointment {
     return appointmentTime;
   }
 
-  public void setAppointmentTime(LocalDateTime appointmentTime) {
+  void setAppointmentTime(LocalDateTime appointmentTime) {
     this.appointmentTime = appointmentTime;
   }
 
@@ -60,7 +60,7 @@ public class Appointment {
     return doctor;
   }
 
-  public void setDoctor(User doctor) {
+  void setDoctor(User doctor) {
     this.doctor = doctor;
   }
 
@@ -68,7 +68,7 @@ public class Appointment {
     return patient;
   }
 
-  public void setPatient(Patient patient) {
+  void setPatient(Patient patient) {
     this.patient = patient;
   }
 
@@ -76,7 +76,7 @@ public class Appointment {
     return status;
   }
 
-  public void setStatus(AppointmentStatus status) {
+  void setStatus(AppointmentStatus status) {
     this.status = status;
   }
 
@@ -84,7 +84,7 @@ public class Appointment {
     return diagnosis;
   }
 
-  public void setDiagnosis(String diagnosis) {
+  void setDiagnosis(String diagnosis) {
     this.diagnosis = diagnosis;
   }
 
@@ -92,7 +92,7 @@ public class Appointment {
     return description;
   }
 
-  public void setDescription(String description) {
+  void setDescription(String description) {
     this.description = description;
   }
 }

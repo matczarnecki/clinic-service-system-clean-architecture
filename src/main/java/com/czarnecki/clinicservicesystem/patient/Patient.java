@@ -22,7 +22,7 @@ public class Patient {
     return id;
   }
 
-  public void setId(Integer id) {
+  void setId(Integer id) {
     this.id = id;
   }
 
@@ -30,7 +30,7 @@ public class Patient {
     return firstName;
   }
 
-  public void setFirstName(String firstName) {
+  void setFirstName(String firstName) {
     this.firstName = firstName;
   }
 
@@ -38,7 +38,7 @@ public class Patient {
     return lastName;
   }
 
-  public void setLastName(String lastName) {
+  void setLastName(String lastName) {
     this.lastName = lastName;
   }
 }

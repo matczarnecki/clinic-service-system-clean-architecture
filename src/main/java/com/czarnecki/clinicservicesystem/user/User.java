@@ -34,7 +34,7 @@ public class User {
     return id;
   }
 
-  public void setId(Integer id) {
+  void setId(Integer id) {
     this.id = id;
   }
 
@@ -42,7 +42,7 @@ public class User {
     return username;
   }
 
-  public void setUsername(String username) {
+  void setUsername(String username) {
     this.username = username;
   }
 
@@ -50,7 +50,7 @@ public class User {
     return password;
   }
 
-  public void setPassword(String password) {
+  void setPassword(String password) {
     this.password = password;
   }
 
@@ -58,7 +58,7 @@ public class User {
     return emailAddress;
   }
 
-  public void setEmailAddress(String emailAddress) {
+  void setEmailAddress(String emailAddress) {
     this.emailAddress = emailAddress;
   }
 
@@ -66,7 +66,7 @@ public class User {
     return isActive;
   }
 
-  public void setActive(boolean active) {
+  void setActive(boolean active) {
     isActive = active;
   }
 
@@ -74,7 +74,7 @@ public class User {
     return role;
   }
 
-  public void setRole(Role role) {
+  void setRole(Role role) {
     this.role = role;
   }
 
@@ -82,7 +82,7 @@ public class User {
     return firstName;
   }
 
-  public void setFirstName(String firstName) {
+  void setFirstName(String firstName) {
     this.firstName = firstName;
   }
 
@@ -90,7 +90,7 @@ public class User {
     return lastName;
   }
 
-  public void setLastName(String lastName) {
+  void setLastName(String lastName) {
     this.lastName = lastName;
   }
 
@@ -98,7 +98,7 @@ public class User {
     return isBlocked;
   }
 
-  public void setBlocked(final boolean blocked) {
+  void setBlocked(final boolean blocked) {
     isBlocked = blocked;
   }
 
@@ -106,7 +106,7 @@ public class User {
     return numberOfFailedLogins;
   }
 
-  public void setNumberOfFailedLogins(final Integer numberOfFailedLogins) {
+  void setNumberOfFailedLogins(final Integer numberOfFailedLogins) {
     this.numberOfFailedLogins = numberOfFailedLogins;
   }
 }

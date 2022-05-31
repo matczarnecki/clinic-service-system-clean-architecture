@@ -29,7 +29,7 @@ public class Role {
     return code;
   }
 
-  public void setCode(String code) {
+  void setCode(String code) {
     this.code = code;
   }
 
@@ -37,7 +37,7 @@ public class Role {
     return name;
   }
 
-  public void setName(String name) {
+  void setName(String name) {
     this.name = name;
   }
 
@@ -45,7 +45,7 @@ public class Role {
     return authorities;
   }
 
-  public void setAuthorities(Set<Authority> authorities) {
+  void setAuthorities(Set<Authority> authorities) {
     this.authorities = authorities;
   }
 }
