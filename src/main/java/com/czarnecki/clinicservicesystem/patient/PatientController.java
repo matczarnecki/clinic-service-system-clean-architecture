@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/v1/api/patients")
 class PatientController {
-  private final PatientService patientService;
+  private final PatientFacade patientService;
 
-  PatientController(PatientService patientService) {
+  PatientController(PatientFacade patientService) {
     this.patientService = patientService;
   }
 

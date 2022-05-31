@@ -3,15 +3,20 @@ package com.czarnecki.clinicservicesystem.patient;
 import com.czarnecki.clinicservicesystem.patient.dto.PatientRequestResponse;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 @Service
-class PatientService {
+public class PatientFacade {
   private final PatientRepository patientRepository;
 
-  PatientService(PatientRepository patientRepository) {
+  PatientFacade(PatientRepository patientRepository) {
     this.patientRepository = patientRepository;
+  }
+
+  public Optional<Patient> findById(int patientId) {
+    return patientRepository.findById(patientId);
   }
 
   public List<PatientRequestResponse> getPatients() {

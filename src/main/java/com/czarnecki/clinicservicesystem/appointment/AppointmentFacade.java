@@ -5,9 +5,9 @@ import com.czarnecki.clinicservicesystem.appointment.dto.AppointmentRequest;
 import com.czarnecki.clinicservicesystem.appointment.dto.AppointmentResponse;
 import com.czarnecki.clinicservicesystem.appointment.dto.MakeAppointmentRequest;
 import com.czarnecki.clinicservicesystem.patient.Patient;
+import com.czarnecki.clinicservicesystem.patient.PatientFacade;
 import com.czarnecki.clinicservicesystem.user.User;
 import com.czarnecki.clinicservicesystem.exception.BadRequestException;
-import com.czarnecki.clinicservicesystem.patient.PatientRepository;
 import com.czarnecki.clinicservicesystem.user.UserRepository;
 import java.time.LocalDate;
 import java.util.List;
@@ -15,17 +15,17 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 @Service
-class AppointmentService {
+public class AppointmentFacade {
   private final AppointmentRepository appointmentRepository;
   private final UserRepository userRepository;
-  private final PatientRepository patientRepository;
+  private final PatientFacade patientFacade;
 
-  AppointmentService(AppointmentRepository appointmentRepository,
-                            UserRepository userRepository,
-                            PatientRepository patientRepository) {
+  AppointmentFacade(final AppointmentRepository appointmentRepository,
+                    final UserRepository userRepository,
+                    final PatientFacade patientFacade) {
     this.appointmentRepository = appointmentRepository;
     this.userRepository = userRepository;
-    this.patientRepository = patientRepository;
+    this.patientFacade = patientFacade;
   }
 
   List<AppointmentResponse> getAppointmentsForDay(LocalDate date, Integer doctorId) {
@@ -53,7 +53,6 @@ class AppointmentService {
     return appointments;
   }
 
-
   void cancelAppointment(Integer id) {
     Appointment appointment = appointmentRepository.findById(id)
         .orElseThrow(() -> new BadRequestException("Appointment with id: " + id + " was not found"));
@@ -65,7 +64,7 @@ class AppointmentService {
     User doctor = userRepository.findById(request.getDoctorId())
         .orElseThrow(() -> new BadRequestException("Doctor with id: " + request.getDoctorId() + " was not found"));
 
-    Patient patient = patientRepository.findById(request.getPatientId())
+    Patient patient = patientFacade.findById(request.getPatientId())
         .orElseThrow(() -> new BadRequestException("Patient with id: " + request.getPatientId() + " was not found"));
 
     Appointment appointment = new Appointment();

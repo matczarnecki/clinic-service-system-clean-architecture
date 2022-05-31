@@ -23,9 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/v1/api/appointments")
 class AppointmentController {
-  private final AppointmentService appointmentService;
+  private final AppointmentFacade appointmentService;
 
-  AppointmentController(AppointmentService appointmentService) {
+  AppointmentController(AppointmentFacade appointmentService) {
     this.appointmentService = appointmentService;
   }
 
