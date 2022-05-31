@@ -6,6 +6,7 @@ import com.polsl.clinicservicesystem.user.dto.UserResponse;
 import com.polsl.clinicservicesystem.exception.BadRequestException;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,7 +28,7 @@ public class UserService {
   }
 
   public void registerNewUser(RegisterUserRequest request) {
-    UserEntity newUser = new UserEntity();
+    User newUser = new User();
 
     if (userRepository.existsByUsername(request.getUsername())) {
       throw new BadRequestException("User with this username already exists");
@@ -36,7 +37,7 @@ public class UserService {
       throw new BadRequestException("User with this email address already exists");
     }
 
-    RoleEntity role = roleRepository.findById(request.getRole()).orElseThrow(() -> {
+    Role role = roleRepository.findById(request.getRole()).orElseThrow(() -> {
       throw new BadRequestException("Role provided for user doesn't exist");
     });
 
@@ -51,7 +52,7 @@ public class UserService {
   }
 
   public List<?> getUsers() {
-    List<UserEntity> users = userRepository.findAll();
+    Set<User> users = userRepository.findAll();
     return users
         .stream()
         .map(UserResponse::fromEntity)
@@ -59,14 +60,14 @@ public class UserService {
   }
 
   public UserResponse getUser(Integer id) {
-    UserEntity user = userRepository
+    User user = userRepository
         .findById(id)
         .orElseThrow(() -> new BadRequestException("User not found"));
     return UserResponse.fromEntity(user);
   }
 
   public void editUser(Integer id, EditUserRequest request) {
-    UserEntity user = userRepository
+    User user = userRepository
         .findById(id)
         .orElseThrow(() -> new BadRequestException("User not found"));
     user.setUsername(request.getUsername());
@@ -80,7 +81,7 @@ public class UserService {
   }
 
   public void disableUser(Integer id) {
-    UserEntity user = userRepository
+    User user = userRepository
         .findById(id)
         .orElseThrow(() -> new BadRequestException("User not found"));
     user.setActive(false);

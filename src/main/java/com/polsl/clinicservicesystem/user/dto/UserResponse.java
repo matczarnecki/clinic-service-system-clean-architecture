@@ -1,6 +1,6 @@
 package com.polsl.clinicservicesystem.user.dto;
 
-import com.polsl.clinicservicesystem.user.UserEntity;
+import com.polsl.clinicservicesystem.user.User;
 
 public class UserResponse {
 
@@ -20,7 +20,7 @@ public class UserResponse {
 
   private boolean isBlocked;
 
-  public static UserResponse fromEntity(UserEntity entity) {
+  public static UserResponse fromEntity(User entity) {
     UserResponse response = new UserResponse();
     response.setId(entity.getId());
     response.setUsername(entity.getUsername());

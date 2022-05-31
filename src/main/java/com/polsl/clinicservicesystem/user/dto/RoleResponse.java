@@ -1,6 +1,6 @@
 package com.polsl.clinicservicesystem.user.dto;
 
-import com.polsl.clinicservicesystem.user.RoleEntity;
+import com.polsl.clinicservicesystem.user.Role;
 
 public class RoleResponse {
   private String code;
@@ -22,7 +22,7 @@ public class RoleResponse {
     this.name = name;
   }
 
-  public static RoleResponse fromEntity(RoleEntity entity) {
+  public static RoleResponse fromEntity(Role entity) {
     RoleResponse role = new RoleResponse();
     role.setCode(entity.getCode());
     role.setName(entity.getName());

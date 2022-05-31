@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PatientService {
+class PatientService {
   private final PatientRepository patientRepository;
 
   PatientService(PatientRepository patientRepository) {
@@ -22,7 +22,7 @@ public class PatientService {
   }
 
   public void addPatient(PatientRequestResponse request) {
-    PatientEntity patient = new PatientEntity();
+    Patient patient = new Patient();
     patient.setFirstName(request.getFirstName());
     patient.setLastName(request.getLastName());
     patientRepository.save(patient);

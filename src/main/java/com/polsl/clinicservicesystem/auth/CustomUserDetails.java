@@ -1,6 +1,6 @@
 package com.polsl.clinicservicesystem.auth;
 
-import com.polsl.clinicservicesystem.user.UserEntity;
+import com.polsl.clinicservicesystem.user.User;
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -17,7 +17,7 @@ public class CustomUserDetails implements UserDetails {
   private final boolean isActive;
   private final Collection<? extends GrantedAuthority> authorities;
 
-  CustomUserDetails(UserEntity user) {
+  CustomUserDetails(User user) {
 
     final Set<GrantedAuthority> userAuthorities =
         user.getRole().getAuthorities()

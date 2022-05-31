@@ -1,6 +1,6 @@
 package com.polsl.clinicservicesystem.patient.dto;
 
-import com.polsl.clinicservicesystem.patient.PatientEntity;
+import com.polsl.clinicservicesystem.patient.Patient;
 import javax.validation.constraints.NotBlank;
 
 public class PatientRequestResponse {
@@ -37,7 +37,7 @@ public class PatientRequestResponse {
     this.lastName = lastName;
   }
 
-  public static PatientRequestResponse fromEntity(PatientEntity entity) {
+  public static PatientRequestResponse fromEntity(Patient entity) {
     PatientRequestResponse dto = new PatientRequestResponse();
     dto.setFirstName(entity.getFirstName());
     dto.setLastName(entity.getLastName());

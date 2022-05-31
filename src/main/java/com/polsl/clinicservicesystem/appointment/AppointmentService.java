@@ -5,8 +5,8 @@ import com.polsl.clinicservicesystem.appointment.dto.AppointmentRequest;
 import com.polsl.clinicservicesystem.appointment.dto.AppointmentResponse;
 import com.polsl.clinicservicesystem.appointment.dto.MakeAppointmentRequest;
 import com.polsl.clinicservicesystem.exception.BadRequestException;
-import com.polsl.clinicservicesystem.patient.PatientEntity;
-import com.polsl.clinicservicesystem.user.UserEntity;
+import com.polsl.clinicservicesystem.patient.Patient;
+import com.polsl.clinicservicesystem.user.User;
 import com.polsl.clinicservicesystem.patient.PatientRepository;
 import com.polsl.clinicservicesystem.user.UserRepository;
 import java.time.LocalDate;
@@ -55,20 +55,20 @@ class AppointmentService {
 
 
   void cancelAppointment(Integer id) {
-    AppointmentEntity appointment = appointmentRepository.findById(id)
+    Appointment appointment = appointmentRepository.findById(id)
         .orElseThrow(() -> new BadRequestException("Appointment with id: " + id + " was not found"));
     appointment.setStatus(AppointmentStatus.CANCELLED);
     appointmentRepository.save(appointment);
   }
 
   void createAppointment(AppointmentRequest request) {
-    UserEntity doctor = userRepository.findById(request.getDoctorId())
+    User doctor = userRepository.findById(request.getDoctorId())
         .orElseThrow(() -> new BadRequestException("Doctor with id: " + request.getDoctorId() + " was not found"));
 
-    PatientEntity patient = patientRepository.findById(request.getPatientId())
+    Patient patient = patientRepository.findById(request.getPatientId())
         .orElseThrow(() -> new BadRequestException("Patient with id: " + request.getPatientId() + " was not found"));
 
-    AppointmentEntity appointment = new AppointmentEntity();
+    Appointment appointment = new Appointment();
     appointment.setAppointmentTime(request.getAppointmentTime());
     appointment.setDoctor(doctor);
     appointment.setPatient(patient);
@@ -77,13 +77,13 @@ class AppointmentService {
   }
 
   AppointmentResponse getAppointment(Integer id) {
-    AppointmentEntity appointment = appointmentRepository.findById(id)
+    Appointment appointment = appointmentRepository.findById(id)
         .orElseThrow(() -> new BadRequestException("Appointment with id: " + id + " was not found"));
     return AppointmentResponse.fromEntity(appointment);
   }
 
   List<AppointmentFullResponse> getPatientAppointments(Integer id) {
-    AppointmentEntity entity = appointmentRepository.findById(id)
+    Appointment entity = appointmentRepository.findById(id)
         .orElseThrow(() -> new BadRequestException("Appointment with id: " + id + " was not found"));
     List<AppointmentFullResponse> appointments;
     appointments = appointmentRepository.findAllByAppointmentTimeBefore(entity.getAppointmentTime())
@@ -94,7 +94,7 @@ class AppointmentService {
   }
 
   void makeAppointment(Integer id, MakeAppointmentRequest request) {
-    AppointmentEntity entity = appointmentRepository.findById(id)
+    Appointment entity = appointmentRepository.findById(id)
         .orElseThrow(() -> new BadRequestException("Appointment with id: " + id + " was not found"));
 
     entity.setDescription(request.getDescription());

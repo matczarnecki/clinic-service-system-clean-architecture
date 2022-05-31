@@ -2,7 +2,7 @@ package com.polsl.clinicservicesystem.appointment.dto;
 
 import com.polsl.clinicservicesystem.patient.dto.PatientRequestResponse;
 import com.polsl.clinicservicesystem.user.dto.UserResponse;
-import com.polsl.clinicservicesystem.appointment.AppointmentEntity;
+import com.polsl.clinicservicesystem.appointment.Appointment;
 import com.polsl.clinicservicesystem.appointment.AppointmentStatus;
 import java.time.LocalDateTime;
 
@@ -53,7 +53,7 @@ public class AppointmentResponse {
     this.status = status;
   }
 
-  public static AppointmentResponse fromEntity(AppointmentEntity entity) {
+  public static AppointmentResponse fromEntity(Appointment entity) {
     AppointmentResponse dto = new AppointmentResponse();
     dto.setId(entity.getId());
     dto.setAppointmentTime(entity.getAppointmentTime());

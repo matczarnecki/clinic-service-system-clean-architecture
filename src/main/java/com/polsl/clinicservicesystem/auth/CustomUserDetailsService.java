@@ -1,6 +1,6 @@
 package com.polsl.clinicservicesystem.auth;
 
-import com.polsl.clinicservicesystem.user.UserEntity;
+import com.polsl.clinicservicesystem.user.User;
 import com.polsl.clinicservicesystem.user.UserRepository;
 import javax.transaction.Transactional;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +20,7 @@ class CustomUserDetailsService implements UserDetailsService {
   @Override
   @Transactional
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    UserEntity user = userRepository.findByUsername(username)
+    User user = userRepository.findByUsername(username)
         .orElseThrow(() -> new UsernameNotFoundException("Not found: " + username));
     return new CustomUserDetails(user);
   }
