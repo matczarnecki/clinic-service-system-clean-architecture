@@ -2,24 +2,24 @@ package com.polsl.clinicservicesystem.appointment;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
+
 import org.springframework.data.repository.CrudRepository;
 
-interface AppointmentRepository extends CrudRepository<AppointmentEntity, Integer> {
+interface AppointmentRepository extends CrudRepository<Appointment, Integer> {
 
-  default List<AppointmentEntity> findByAppointmentDate(LocalDate localDate) {
+  default Set<Appointment> findByAppointmentDate(LocalDate localDate) {
     return findByAppointmentTimeBetween(localDate.atStartOfDay(), localDate.plusDays(1).atStartOfDay());
   }
 
-  default List<AppointmentEntity> findByAppointmentDateAndDoctor_Id(LocalDate localDate, Integer doctorId) {
+  default Set<Appointment> findByAppointmentDateAndDoctor_Id(LocalDate localDate, Integer doctorId) {
     return findByAppointmentTimeBetweenAndDoctor_Id(localDate.atStartOfDay(), localDate.plusDays(1).atStartOfDay(),
         doctorId);
   }
 
-  List<AppointmentEntity> findByAppointmentTimeBetween(LocalDateTime from, LocalDateTime to);
+  Set<Appointment> findByAppointmentTimeBetween(LocalDateTime from, LocalDateTime to);
 
-  List<AppointmentEntity> findByAppointmentTimeBetweenAndDoctor_Id(LocalDateTime from, LocalDateTime to,
-                                                                    Integer doctorId);
+  Set<Appointment> findByAppointmentTimeBetweenAndDoctor_Id(LocalDateTime from, LocalDateTime to, Integer doctorId);
 
-  List<AppointmentEntity> findAllByAppointmentTimeBefore(LocalDateTime appointmentTime);
+  Set<Appointment> findAllByAppointmentTimeBefore(LocalDateTime appointmentTime);
 }

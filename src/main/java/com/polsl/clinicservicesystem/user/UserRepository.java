@@ -1,16 +1,17 @@
 package com.polsl.clinicservicesystem.user;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
 import org.springframework.data.repository.CrudRepository;
 
-public interface UserRepository extends CrudRepository<UserEntity, Integer> {
+public interface UserRepository extends CrudRepository<User, Integer> {
 
-  Optional<UserEntity> findByUsername(String username);
+  Optional<User> findByUsername(String username);
 
-  List<UserEntity> findAll();
+  Set<User> findAll();
 
-  List<UserEntity> findAllByRole_Code(String doc);
+  Set<User> findAllByRole_Code(String doc);
 
   boolean existsByUsername(String username);
 

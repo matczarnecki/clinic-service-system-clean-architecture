@@ -1,8 +1,9 @@
 package com.polsl.clinicservicesystem.patient;
 
-import java.util.List;
+import java.util.Set;
+
 import org.springframework.data.repository.CrudRepository;
 
-public interface PatientRepository extends CrudRepository<PatientEntity, Integer> {
-  List<PatientEntity> findAll();
+public interface PatientRepository extends CrudRepository<Patient, Integer> {
+  Set<Patient> findAll();
 }
