@@ -23,8 +23,7 @@ public class SimpleUserQueryDto {
     public SimpleUserQueryDto(final Integer id,
                               final String firstName,
                               final String lastName,
-                              final String emailAddress
-    ) {
+                              final String emailAddress) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

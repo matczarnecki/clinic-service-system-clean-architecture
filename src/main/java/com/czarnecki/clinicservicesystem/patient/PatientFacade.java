@@ -26,7 +26,7 @@ public class PatientFacade {
     }
 
     public void addPatient(PatientDto request) {
-        Patient patient = new Patient();
+        var patient = new Patient();
         patient.setFirstName(request.getFirstName());
         patient.setLastName(request.getLastName());
         patientRepository.save(patient);

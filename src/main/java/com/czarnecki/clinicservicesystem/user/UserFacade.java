@@ -33,7 +33,7 @@ public class UserFacade {
     }
 
     public void registerNewUser(RegisterUserRequest request) {
-        User newUser = new User();
+        var newUser = new User();
 
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new BadRequestException("User with this username already exists");
@@ -57,8 +57,8 @@ public class UserFacade {
     }
 
     public Optional<UserDto> findById(int userId) {
-        return userRepository.findById(userId).map((user) ->
-                UserDto.builder()
+        return userRepository.findById(userId)
+                .map((user) -> UserDto.builder()
                         .withId(user.getId())
                         .withUsername(user.getUsername())
                         .withEmail(user.getEmailAddress())
@@ -68,7 +68,7 @@ public class UserFacade {
                         .withLastName(user.getLastName())
                         .withBlocked(user.isBlocked())
                         .build()
-        );
+                );
     }
 
     public Optional<User> findByUsername(String username) {
@@ -76,7 +76,7 @@ public class UserFacade {
     }
 
     public List<?> getUsers() {
-        Set<User> users = userRepository.findAll();
+        var users = userRepository.findAll();
         return users
                 .stream()
                 .map(User::toDto)
@@ -84,15 +84,13 @@ public class UserFacade {
     }
 
     public UserDto getUser(Integer id) {
-        User user = userRepository
-                .findById(id)
+        var user = userRepository.findById(id)
                 .orElseThrow(() -> new BadRequestException("User not found"));
         return user.toDto();
     }
 
     public void editUser(Integer id, EditUserRequest request) {
-        User user = userRepository
-                .findById(id)
+        var user = userRepository.findById(id)
                 .orElseThrow(() -> new BadRequestException("User not found"));
         user.setUsername(request.getUsername());
         user.setFirstName(request.getFirstName());
@@ -105,7 +103,7 @@ public class UserFacade {
     }
 
     public void disableUser(Integer id) {
-        User user = userRepository
+        var user = userRepository
                 .findById(id)
                 .orElseThrow(() -> new BadRequestException("User not found"));
         user.setActive(false);

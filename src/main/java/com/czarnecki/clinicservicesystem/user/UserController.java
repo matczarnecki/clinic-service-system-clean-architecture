@@ -49,7 +49,7 @@ class UserController {
 
     @GetMapping("/me")
     ResponseEntity<?> getLoggedUser(Authentication auth) {
-        CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+        var user = (CustomUserDetails) auth.getPrincipal();
         return ResponseEntity.ok(userService.getUser(user.getId()));
     }
 

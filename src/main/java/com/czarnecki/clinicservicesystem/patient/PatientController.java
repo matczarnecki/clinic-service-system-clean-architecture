@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 class PatientController {
     private final PatientFacade patientFacade;
 
-    PatientController(PatientFacade patientService) {
+    PatientController(final PatientFacade patientService) {
         this.patientFacade = patientService;
     }
 
