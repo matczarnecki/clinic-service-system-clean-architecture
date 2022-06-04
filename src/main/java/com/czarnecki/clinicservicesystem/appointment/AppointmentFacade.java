@@ -80,31 +80,31 @@ public class AppointmentFacade {
     }
 
     void cancelAppointment(Integer id) {
-        Appointment appointment = appointmentRepository.findById(id)
+        var appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new BadRequestException("Appointment with id: " + id + " was not found"));
         appointment.setStatus(AppointmentStatus.CANCELLED);
         appointmentRepository.save(appointment);
     }
 
     void createAppointment(AppointmentRequestDto request) {
-        UserDto doctorDto = userFacade.findById(request.getDoctorId())
+        var doctorDto = userFacade.findById(request.getDoctorId())
                 .orElseThrow(() -> new BadRequestException("Doctor with id: " + request.getDoctorId() + " was not found"));
 
-        PatientDto patientDto = patientFacade.findById(request.getPatientId())
+        var patientDto = patientFacade.findById(request.getPatientId())
                 .orElseThrow(() -> new BadRequestException("Patient with id: " + request.getPatientId() + " was not found"));
 
-        SimpleUserQueryDto doctor = new SimpleUserQueryDto(doctorDto.getId(), doctorDto.getFirstName(), doctorDto.getLastName(), doctorDto.getEmail());
-        SimplePatientQueryDto patient = new SimplePatientQueryDto(patientDto.getId(), patientDto.getFirstName(), patientDto.getLastName());
-        Appointment appointment = appointmentFactory.from(request, doctor, patient, AppointmentStatus.SCHEDULED);
+        var doctorQueryDto = new SimpleUserQueryDto(doctorDto.getId(), doctorDto.getFirstName(), doctorDto.getLastName(), doctorDto.getEmail());
+        var patientQueryDto = new SimplePatientQueryDto(patientDto.getId(), patientDto.getFirstName(), patientDto.getLastName());
+        var appointment = appointmentFactory.from(request, doctorQueryDto, patientQueryDto, AppointmentStatus.SCHEDULED);
         appointmentRepository.save(appointment);
     }
 
     AppointmentShortResponseDto getAppointment(Integer id) {
-        Appointment appointment = appointmentRepository.findById(id)
+        var appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new BadRequestException("Appointment with id: " + id + " was not found"));
         var patientDto = appointment.getPatient();
         var doctorDto = appointment.getDoctor();
-        var appointmentResponse = AppointmentShortResponseDto.builder()
+        return AppointmentShortResponseDto.builder()
                 .withId(appointment.getId())
                 .withAppointmentTime(appointment.getAppointmentTime())
                 .withDoctor(UserDto.builder()
@@ -117,16 +117,13 @@ public class AppointmentFacade {
                         .build())
                 .withStatus(appointment.getStatus())
                 .build();
-
-        return appointmentResponse;
     }
 
     // TODO this method doesn't do what it's name suggests
     List<AppointmentDto> getPatientAppointments(Integer appointmentId) {
-        Appointment entity = appointmentRepository.findById(appointmentId)
+        var entity = appointmentRepository.findById(appointmentId)
                 .orElseThrow(() -> new BadRequestException("Appointment with id: " + appointmentId + " was not found"));
-        List<AppointmentDto> appointments;
-        appointments = appointmentRepository.findAllByAppointmentTimeBefore(entity.getAppointmentTime())
+        return appointmentRepository.findAllByAppointmentTimeBefore(entity.getAppointmentTime())
                 .stream()
                 .map((appointment) -> AppointmentDto.builder()
                         .withId(appointment.getId())
@@ -143,11 +140,10 @@ public class AppointmentFacade {
                         .withDiagnosis(appointment.getDiagnosis())
                         .withDescription(appointment.getDescription())
                         .build()).collect(toList());
-        return appointments;
     }
 
     void makeAppointment(Integer id, MakeAppointmentRequest request) {
-        Appointment appointment = appointmentRepository.findById(id)
+        var appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new BadRequestException("Appointment with id: " + id + " was not found"));
 
         appointment.setDescription(request.getDescription());
