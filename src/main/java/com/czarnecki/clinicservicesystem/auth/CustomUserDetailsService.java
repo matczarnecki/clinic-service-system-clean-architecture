@@ -4,6 +4,7 @@ import com.czarnecki.clinicservicesystem.user.User;
 import com.czarnecki.clinicservicesystem.user.UserFacade;
 
 import javax.transaction.Transactional;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,10 +20,10 @@ class CustomUserDetailsService implements UserDetailsService {
     }
 
     @Override
-  @Transactional
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    User user = userFacade.findByUsername(username)
-        .orElseThrow(() -> new UsernameNotFoundException("Not found: " + username));
-    return new CustomUserDetails(user);
-  }
+    @Transactional
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userFacade.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Not found: " + username));
+        return new CustomUserDetails(user);
+    }
 }
