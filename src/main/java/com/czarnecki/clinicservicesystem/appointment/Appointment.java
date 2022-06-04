@@ -1,8 +1,7 @@
 package com.czarnecki.clinicservicesystem.appointment;
 
-
-import com.czarnecki.clinicservicesystem.patient.Patient;
-import com.czarnecki.clinicservicesystem.user.User;
+import com.czarnecki.clinicservicesystem.patient.query.SimplePatientQueryDto;
+import com.czarnecki.clinicservicesystem.user.query.SimpleUserQueryDto;
 
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
@@ -17,82 +16,77 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "appointments")
-public class Appointment {
+class Appointment {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private LocalDateTime appointmentTime;
+    @ManyToOne
+    @JoinColumn(name = "doctor_id")
+    private SimpleUserQueryDto doctor;
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    private SimplePatientQueryDto patient;
+    @Enumerated(EnumType.STRING)
+    private AppointmentStatus status;
+    private String diagnosis;
+    private String description;
 
-  private LocalDateTime appointmentTime;
 
-  @ManyToOne
-  @JoinColumn(name = "doctor_id")
-  private User doctor;
+    Integer getId() {
+        return id;
+    }
 
-  @ManyToOne
-  @JoinColumn(name = "patient_id")
-  private Patient patient;
+    void setId(Integer id) {
+        this.id = id;
+    }
 
-  @Enumerated(EnumType.STRING)
-  private AppointmentStatus status;
+    LocalDateTime getAppointmentTime() {
+        return appointmentTime;
+    }
 
-  private String diagnosis;
+    void setAppointmentTime(LocalDateTime appointmentTime) {
+        this.appointmentTime = appointmentTime;
+    }
 
-  private String description;
+    SimpleUserQueryDto getDoctor() {
+        return doctor;
+    }
 
-  public Integer getId() {
-    return id;
-  }
+    void setDoctor(SimpleUserQueryDto doctor) {
+        this.doctor = doctor;
+    }
 
-  void setId(Integer id) {
-    this.id = id;
-  }
+    SimplePatientQueryDto getPatient() {
+        return patient;
+    }
 
-  public LocalDateTime getAppointmentTime() {
-    return appointmentTime;
-  }
+    void setPatient(SimplePatientQueryDto patient) {
+        this.patient = patient;
+    }
 
-  void setAppointmentTime(LocalDateTime appointmentTime) {
-    this.appointmentTime = appointmentTime;
-  }
+    AppointmentStatus getStatus() {
+        return status;
+    }
 
-  public User getDoctor() {
-    return doctor;
-  }
+    void setStatus(AppointmentStatus status) {
+        this.status = status;
+    }
 
-  void setDoctor(User doctor) {
-    this.doctor = doctor;
-  }
+    String getDiagnosis() {
+        return diagnosis;
+    }
 
-  public Patient getPatient() {
-    return patient;
-  }
+    void setDiagnosis(String diagnosis) {
+        this.diagnosis = diagnosis;
+    }
 
-  void setPatient(Patient patient) {
-    this.patient = patient;
-  }
+    String getDescription() {
+        return description;
+    }
 
-  public AppointmentStatus getStatus() {
-    return status;
-  }
-
-  void setStatus(AppointmentStatus status) {
-    this.status = status;
-  }
-
-  public String getDiagnosis() {
-    return diagnosis;
-  }
-
-  void setDiagnosis(String diagnosis) {
-    this.diagnosis = diagnosis;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  void setDescription(String description) {
-    this.description = description;
-  }
+    void setDescription(String description) {
+        this.description = description;
+    }
 }

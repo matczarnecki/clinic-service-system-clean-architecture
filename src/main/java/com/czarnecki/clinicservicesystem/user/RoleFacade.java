@@ -1,10 +1,10 @@
 package com.czarnecki.clinicservicesystem.user;
 
-import com.czarnecki.clinicservicesystem.user.dto.RoleResponse;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import com.czarnecki.clinicservicesystem.user.dto.RoleDto;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,7 +20,7 @@ public class RoleFacade {
     return roleRepository
         .findAll()
         .stream()
-        .map(RoleResponse::fromEntity)
+        .map(Role::toDto)
         .collect(Collectors.toList());
   }
 

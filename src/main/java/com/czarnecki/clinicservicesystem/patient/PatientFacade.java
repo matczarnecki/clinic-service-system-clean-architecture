@@ -1,35 +1,34 @@
 package com.czarnecki.clinicservicesystem.patient;
 
-import com.czarnecki.clinicservicesystem.patient.dto.PatientRequestResponse;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 @Service
 public class PatientFacade {
-  private final PatientRepository patientRepository;
+    private final PatientRepository patientRepository;
 
-  PatientFacade(PatientRepository patientRepository) {
-    this.patientRepository = patientRepository;
-  }
+    PatientFacade(final PatientRepository patientRepository) {
+        this.patientRepository = patientRepository;
+    }
 
-  public Optional<Patient> findById(int patientId) {
-    return patientRepository.findById(patientId);
-  }
+    public Optional<PatientDto> findById(int patientId) {
+        return patientRepository.findById(patientId).map(Patient::toDto);
+    }
 
-  public List<PatientRequestResponse> getPatients() {
-    return patientRepository.findAll()
-        .stream()
-        .map(PatientRequestResponse::fromEntity)
-        .collect(Collectors.toList());
-  }
+    public List<PatientDto> getPatients() {
+        return patientRepository.findAll()
+                .stream()
+                .map(Patient::toDto)
+                .collect(Collectors.toList());
+    }
 
-  public void addPatient(PatientRequestResponse request) {
-    Patient patient = new Patient();
-    patient.setFirstName(request.getFirstName());
-    patient.setLastName(request.getLastName());
-    patientRepository.save(patient);
-  }
+    public void addPatient(PatientDto request) {
+        Patient patient = new Patient();
+        patient.setFirstName(request.getFirstName());
+        patient.setLastName(request.getLastName());
+        patientRepository.save(patient);
+    }
 }
