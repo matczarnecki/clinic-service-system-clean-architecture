@@ -20,7 +20,7 @@ public class UserDto {
     this.email = builder.email;
     this.isActive = builder.isActive;
     this.role = builder.role;
-    this.firstName = builder.firstName;
+      this.firstName = builder.firstName;
     this.lastName = builder.lastName;
     this.isBlocked = builder.isBlocked;
   }
