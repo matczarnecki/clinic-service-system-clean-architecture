@@ -1,4 +1,4 @@
-package test.java.com.czarnecki.clinicservicesystem;
+package com.czarnecki.clinicservicesystem;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
