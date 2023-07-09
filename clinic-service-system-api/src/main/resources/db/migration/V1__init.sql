@@ -30,7 +30,7 @@ create table users
         primary key,
     email_address varchar(255) null,
     first_name    varchar(255) null,
-    is_active     bit          not null,
+    is_active     bit not null,
     last_name     varchar(255) null,
     password      varchar(255) null,
     username      varchar(255) null,
@@ -42,19 +42,19 @@ create table users
 CREATE TABLE patients
 (
     id         INT AUTO_INCREMENT NOT NULL,
-    first_name VARCHAR(255)       NOT NULL,
-    last_name  VARCHAR(255)       NOT NULL,
+    first_name VARCHAR(255) NOT NULL,
+    last_name  VARCHAR(255) NOT NULL,
     CONSTRAINT pk_patients PRIMARY KEY (id)
 );
 
 CREATE TABLE appointments
 (
     id               INT AUTO_INCREMENT NOT NULL,
-    appointment_time datetime           NULL,
-    doctor_id        INT                NULL,
-    patient_id       INT                NULL,
-    status           VARCHAR(255)       NULL,
-    diagnosis        VARCHAR(255)       NULL,
+    appointment_time datetime NULL,
+    doctor_id        INT NULL,
+    patient_id       INT NULL,
+    status           VARCHAR(255) NULL,
+    diagnosis        VARCHAR(255) NULL,
     CONSTRAINT pk_appointments PRIMARY KEY (id)
 );
 

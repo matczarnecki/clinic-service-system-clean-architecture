@@ -9,11 +9,11 @@ import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 @Configuration
 class AppPasswordEncoder {
 
-    @Value("${app.passwordEncoderKey}")
-    private String passwordEncoderKey;
+  @Value("${app.passwordEncoderKey}")
+  private String passwordEncoderKey;
 
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return new Pbkdf2PasswordEncoder(passwordEncoderKey, 100000, 32);
-    }
+  @Bean
+  PasswordEncoder passwordEncoder() {
+    return new Pbkdf2PasswordEncoder(passwordEncoderKey, 100000, 32);
+  }
 }

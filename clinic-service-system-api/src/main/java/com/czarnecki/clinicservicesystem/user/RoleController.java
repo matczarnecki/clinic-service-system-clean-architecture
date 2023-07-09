@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/api/roles")
 class RoleController {
 
-    private final RoleFacade rolesService;
+  private final RoleFacade rolesService;
 
-    RoleController(RoleFacade rolesService) {
-        this.rolesService = rolesService;
-    }
+  RoleController(RoleFacade rolesService) {
+    this.rolesService = rolesService;
+  }
 
-    @GetMapping()
-    @PreAuthorize("hasAuthority('CAN_SEE_ROLES')")
-    ResponseEntity<?> getRoles() {
-        return ResponseEntity.ok(rolesService.getRoles());
-    }
+  @GetMapping()
+  @PreAuthorize("hasAuthority('CAN_SEE_ROLES')")
+  ResponseEntity<?> getRoles() {
+    return ResponseEntity.ok(rolesService.getRoles());
+  }
 }
