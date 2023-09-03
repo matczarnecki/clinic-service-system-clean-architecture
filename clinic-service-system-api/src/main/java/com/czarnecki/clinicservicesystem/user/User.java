@@ -1,14 +1,14 @@
 package com.czarnecki.clinicservicesystem.user;
 
 import com.czarnecki.clinicservicesystem.user.dto.UserDto;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 
 @Entity
@@ -26,7 +26,7 @@ public class User {
   private boolean isActive;
   private boolean isBlocked;
   private Integer numberOfFailedLogins;
-  @OneToOne(fetch = FetchType.LAZY)
+  @OneToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "role", referencedColumnName = "code")
   private Role role;
 

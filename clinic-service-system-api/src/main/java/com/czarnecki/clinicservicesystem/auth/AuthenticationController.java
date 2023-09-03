@@ -2,12 +2,13 @@ package com.czarnecki.clinicservicesystem.auth;
 
 import com.czarnecki.clinicservicesystem.exception.BadRequestException;
 import com.czarnecki.clinicservicesystem.user.UserFacade;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,14 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/v1/api/authentication")
 class AuthenticationController {
-
   private final AuthenticationManager authenticationManager;
-  private final CustomUserDetailsService customUserDetailsService;
+  private final UserDetailsService customUserDetailsService;
   private final UserFacade userService;
   private final JwtUtility jwtUtility;
 
   AuthenticationController(AuthenticationManager authenticationManager,
-                           CustomUserDetailsService customUserDetailsService,
+                           UserDetailsService customUserDetailsService,
                            final UserFacade userService, JwtUtility jwtUtility) {
     this.authenticationManager = authenticationManager;
     this.customUserDetailsService = customUserDetailsService;

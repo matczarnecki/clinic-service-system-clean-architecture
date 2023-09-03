@@ -1,6 +1,6 @@
 package com.czarnecki.clinicservicesystem.appointment.dto;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 
 public class MakeAppointmentRequest {

@@ -6,20 +6,17 @@ import com.czarnecki.clinicservicesystem.user.dto.RegisterUserRequest;
 import com.czarnecki.clinicservicesystem.user.dto.UserDto;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserFacade {
-
   private final UserRepository userRepository;
   private final RoleFacade roleFacade;
   private final PasswordEncoder passwordEncoder;
 
-
-  private final int maxNumberOfFailedLogins = 3;
+  private static final int MAX_NUMBER_OF_FAILED_LOGINS = 3;
 
   UserFacade(final UserRepository userRepository,
              final RoleFacade roleFacade,
@@ -39,9 +36,9 @@ public class UserFacade {
       throw new BadRequestException("User with this email address already exists");
     }
 
-    Role role = roleFacade.findById(request.getRole()).orElseThrow(() -> {
-      throw new BadRequestException("Role provided for user doesn't exist");
-    });
+    Role role = roleFacade.findById(request.getRole()).orElseThrow(() ->
+        new BadRequestException("Role provided for user doesn't exist")
+    );
 
     newUser.setUsername(request.getUsername());
     newUser.setPassword(passwordEncoder.encode(request.getPassword()));
@@ -55,7 +52,7 @@ public class UserFacade {
 
   public Optional<UserDto> findById(int userId) {
     return userRepository.findById(userId)
-        .map((user) -> UserDto.builder()
+        .map(user -> UserDto.builder()
             .withId(user.getId())
             .withUsername(user.getUsername())
             .withEmail(user.getEmailAddress())
@@ -77,7 +74,7 @@ public class UserFacade {
     return users
         .stream()
         .map(User::toDto)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   public UserDto getUser(Integer id) {
@@ -111,11 +108,11 @@ public class UserFacade {
     return userRepository.findAllByRole_Code("DOC")
         .stream()
         .map(User::toDto)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   public void handleCorrectAuthentication(String username) {
-    userRepository.findByUsername(username).ifPresent((user) -> {
+    userRepository.findByUsername(username).ifPresent(user -> {
       if (!user.isBlocked()) {
         user.setNumberOfFailedLogins(0);
         userRepository.save(user);
@@ -126,12 +123,12 @@ public class UserFacade {
   }
 
   public void handleFailedAuthentication(String username) {
-    userRepository.findByUsername(username).ifPresent((user) -> {
+    userRepository.findByUsername(username).ifPresent(user -> {
       if (user.isBlocked()) {
         throw new BadRequestException("Account is locked for user with username: " + user.getUsername());
       }
       user.setNumberOfFailedLogins(user.getNumberOfFailedLogins() + 1);
-      if (user.getNumberOfFailedLogins() > maxNumberOfFailedLogins) {
+      if (user.getNumberOfFailedLogins() > MAX_NUMBER_OF_FAILED_LOGINS) {
         user.setBlocked(true);
       }
       userRepository.save(user);
@@ -139,10 +136,11 @@ public class UserFacade {
   }
 
   public void unlockAccount(Integer id) {
-    userRepository.findById(id).ifPresent((user) -> {
-      user.setBlocked(false);
-      user.setNumberOfFailedLogins(0);
-      userRepository.save(user);
-    });
+    userRepository.findById(id)
+        .ifPresent(user -> {
+          user.setBlocked(false);
+          user.setNumberOfFailedLogins(0);
+          userRepository.save(user);
+        });
   }
 }

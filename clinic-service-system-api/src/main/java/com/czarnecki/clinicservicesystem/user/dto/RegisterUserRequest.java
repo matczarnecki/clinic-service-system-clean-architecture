@@ -1,6 +1,6 @@
 package com.czarnecki.clinicservicesystem.user.dto;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 public class RegisterUserRequest {
 

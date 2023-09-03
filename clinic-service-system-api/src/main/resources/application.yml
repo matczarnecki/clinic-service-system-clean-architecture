@@ -1,0 +1,25 @@
+spring:
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/clinic-service-system-db
+    username: root
+    password: password
+    driver-class-name: com.mysql.jdbc.Driver
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+      type:
+        descriptor:
+          sql: trace
+
+app:
+  jwtSecretKey: T8RgGshkmQQRdXHmgX627Ewmj2AnVU8PuXvR6V7GTbdSL8nSNPHGhQzApq8qjPYAMsGnBNMqxQvVxWVS
+  jwtExpirationInMs: 3600000
+  passwordEncoderKey: cFgMaXd9N235CTtWutmQjf6HFhuvvREq9ZH46dq9dhdCLsutezqGYa6RKDNXH2RtEAGMjn4yqGUUHWS7
