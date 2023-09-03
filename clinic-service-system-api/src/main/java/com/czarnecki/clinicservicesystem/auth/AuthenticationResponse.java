@@ -1,7 +1,6 @@
 package com.czarnecki.clinicservicesystem.auth;
 
 class AuthenticationResponse {
-
   private String jwt;
 
   public AuthenticationResponse(String jwt) {

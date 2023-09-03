@@ -3,8 +3,8 @@ package com.czarnecki.clinicservicesystem.user;
 import com.czarnecki.clinicservicesystem.auth.CustomUserDetails;
 import com.czarnecki.clinicservicesystem.user.dto.EditUserRequest;
 import com.czarnecki.clinicservicesystem.user.dto.RegisterUserRequest;
+import jakarta.validation.Valid;
 import java.util.List;
-import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/v1/api/users")
 class UserController {
-
   private final UserFacade userService;
 
   UserController(final UserFacade userService) {

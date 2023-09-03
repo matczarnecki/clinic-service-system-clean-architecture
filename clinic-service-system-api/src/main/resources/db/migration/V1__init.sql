@@ -110,11 +110,11 @@ INSERT into role_authorities(role_code, authority_code)
 VALUES ('REG', 'CAN_SEE_DOCTORS');
 
 insert into users (id, email_address, is_active, password, username, role, first_name, last_name)
-values (1, 'admin@admin.pl', true, '31d4fa9d861597e8b86a331b', 'admin', 'ADM', 'Pan', 'Admin');
+values (1, 'admin@admin.pl', true, '$2a$10$4zwCe4gpk9/a1KgfHT2CHO7Q7HsZY.2kz.LHPOOBGWypB1U2Nhj5.', 'admin', 'ADM', 'Pan', 'Admin');
 insert into users (id, email_address, is_active, password, username, role, first_name, last_name)
-values (2, 'doctor@doctor.pl', true, '31d4fa9d861597e8b86a331b', 'doctor', 'DOC', 'Pan', 'Doktor');
+values (2, 'doctor@doctor.pl', true, '$2a$10$4zwCe4gpk9/a1KgfHT2CHO7Q7HsZY.2kz.LHPOOBGWypB1U2Nhj5.', 'doctor', 'DOC', 'Pan', 'Doktor');
 insert into users (id, email_address, is_active, password, username, role, first_name, last_name)
-values (3, 'registrant@registrant.pl', true, '31d4fa9d861597e8b86a331b', 'registrant', 'REG', 'Pan', 'Rejestrator');
+values (3, 'registrant@registrant.pl', true, '$2a$10$4zwCe4gpk9/a1KgfHT2CHO7Q7HsZY.2kz.LHPOOBGWypB1U2Nhj5.', 'registrant', 'REG', 'Pan', 'Rejestrator');
 
 insert into patients(id, first_name, last_name)
 values (1, 'John', 'Smith');

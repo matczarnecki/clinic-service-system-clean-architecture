@@ -2,7 +2,7 @@ package com.czarnecki.clinicservicesystem.patient;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 @JsonDeserialize(builder = PatientDto.Builder.class)
 public class PatientDto {

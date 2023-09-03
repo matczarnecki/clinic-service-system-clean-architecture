@@ -1,17 +1,14 @@
 package com.czarnecki.clinicservicesystem.auth;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 class AuthenticationRequest {
-
   @NotBlank
   private String username;
 
   @NotBlank
   private String password;
 
-  public AuthenticationRequest() {
-  }
 
   public String getUsername() {
     return username;
