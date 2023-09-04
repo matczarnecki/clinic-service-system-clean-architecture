@@ -8,7 +8,7 @@ spring:
     url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/clinic-service-system-db
     username: root
     password: password
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
 logging:
   level:
