@@ -22,6 +22,20 @@ public class RegisterUserRequest {
   @NotBlank
   private String role;
 
+  public RegisterUserRequest(final String username,
+                             final String password,
+                             final String firstName,
+                             final String lastName,
+                             final String email,
+                             final String role) {
+    this.username = username;
+    this.password = password;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.role = role;
+  }
+
   public String getUsername() {
     return username;
   }

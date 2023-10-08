@@ -27,8 +27,6 @@ public class UserFacade {
   }
 
   public void registerNewUser(RegisterUserRequest request) {
-    var newUser = new User();
-
     if (userRepository.existsByUsername(request.getUsername())) {
       throw new BadRequestException("User with this username already exists");
     }
@@ -40,6 +38,7 @@ public class UserFacade {
         new BadRequestException("Role provided for user doesn't exist")
     );
 
+    var newUser = new User();
     newUser.setUsername(request.getUsername());
     newUser.setPassword(passwordEncoder.encode(request.getPassword()));
     newUser.setEmailAddress(request.getEmail());
