@@ -124,7 +124,8 @@ class UserFacadeTest {
   void findById_foundUserWithId_returnOptionalUserDto() {
     // given
     int userId = 1;
-    when(mockUserRepository.findById(anyInt())).thenReturn(Optional.of(new User()));
+    var mockUser = getUserMockEntityWithId(userId);
+    when(mockUserRepository.findById(anyInt())).thenReturn(Optional.of(mockUser));
 
     var toTest = new UserFacade(mockUserRepository, null, null);
 
@@ -132,13 +133,24 @@ class UserFacadeTest {
     var result = toTest.findById(userId);
 
     // then
-    assertThat(result).isEmpty();
+    assertThat(result)
+        .isPresent()
+        .hasValueSatisfying(userDto -> {
+          assertThat(userDto.getId()).isEqualTo(userId);
+        });
   }
 
   private RegisterUserRequest getRegisterUserMockRequest() {
     return new RegisterUserRequest("username", "password",
         "first name", "last name",
         "email@email.com", "role");
+  }
+
+  private User getUserMockEntityWithId(int userId) {
+    var user = new User();
+    user.setId(userId);
+    user.setRole(new Role());
+    return user;
   }
 
 }
