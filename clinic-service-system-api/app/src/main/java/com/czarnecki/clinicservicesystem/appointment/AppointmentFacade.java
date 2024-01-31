@@ -1,18 +1,16 @@
 package com.czarnecki.clinicservicesystem.appointment;
 
-import static java.util.stream.Collectors.toList;
-
 import com.czarnecki.clinicservicesystem.appointment.dto.AppointmentDto;
 import com.czarnecki.clinicservicesystem.appointment.dto.AppointmentRequestDto;
 import com.czarnecki.clinicservicesystem.appointment.dto.AppointmentShortResponseDto;
 import com.czarnecki.clinicservicesystem.appointment.dto.MakeAppointmentRequest;
+import com.czarnecki.clinicservicesystem.appointment.query.SimpleUserQueryDto;
 import com.czarnecki.clinicservicesystem.exception.BadRequestException;
 import com.czarnecki.clinicservicesystem.patient.PatientDto;
 import com.czarnecki.clinicservicesystem.patient.PatientFacade;
 import com.czarnecki.clinicservicesystem.patient.query.SimplePatientQueryDto;
 import com.czarnecki.clinicservicesystem.user.UserFacade;
 import com.czarnecki.clinicservicesystem.user.dto.UserDto;
-import com.czarnecki.clinicservicesystem.appointment.query.SimpleUserQueryDto;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -54,14 +52,15 @@ public class AppointmentFacade {
             .withStatus(appointment.getStatus())
             .withDiagnosis(appointment.getDiagnosis())
             .withDescription(appointment.getDescription())
-            .build()).collect(toList());
+            .build())
+        .toList();
   }
 
   List<AppointmentDto> getDoctorAppointmentsForDay(LocalDate date, Integer doctorId) {
     return appointmentRepository.findByAppointmentTimeBetweenAndDoctor_Id(date.atStartOfDay(),
             date.plusDays(1).atStartOfDay(), doctorId)
         .stream()
-        .map((appointment) -> AppointmentDto.builder()
+        .map(appointment -> AppointmentDto.builder()
             .withId(appointment.getId())
             .withAppointmentTime(appointment.getAppointmentTime())
             .withDoctor(UserDto.builder()
@@ -75,7 +74,8 @@ public class AppointmentFacade {
             .withStatus(appointment.getStatus())
             .withDiagnosis(appointment.getDiagnosis())
             .withDescription(appointment.getDescription())
-            .build()).collect(toList());
+            .build())
+        .toList();
   }
 
   void cancelAppointment(Integer id) {
@@ -92,11 +92,23 @@ public class AppointmentFacade {
     var patientDto = patientFacade.findById(request.getPatientId())
         .orElseThrow(() -> new BadRequestException("Patient with id: " + request.getPatientId() + " was not found"));
 
-    var doctorQueryDto = new SimpleUserQueryDto(doctorDto.getId(), doctorDto.getFirstName(), doctorDto.getLastName(),
-        doctorDto.getEmail());
+    var doctorQueryDto =
+        new SimpleUserQueryDto(
+            doctorDto.getId(),
+            doctorDto.getFirstName(),
+            doctorDto.getLastName(),
+            doctorDto.getEmail()
+        );
+
     var patientQueryDto =
-        new SimplePatientQueryDto(patientDto.getId(), patientDto.getFirstName(), patientDto.getLastName());
-    var appointment = appointmentFactory.from(request, doctorQueryDto, patientQueryDto, AppointmentStatus.SCHEDULED);
+        new SimplePatientQueryDto(
+            patientDto.getId(),
+            patientDto.getFirstName(),
+            patientDto.getLastName()
+        );
+
+    var appointment = appointmentFactory
+        .from(request, doctorQueryDto, patientQueryDto, AppointmentStatus.SCHEDULED);
     appointmentRepository.save(appointment);
   }
 
@@ -140,7 +152,8 @@ public class AppointmentFacade {
             .withStatus(appointment.getStatus())
             .withDiagnosis(appointment.getDiagnosis())
             .withDescription(appointment.getDescription())
-            .build()).collect(toList());
+            .build())
+        .toList();
   }
 
   void makeAppointment(Integer id, MakeAppointmentRequest request) {
