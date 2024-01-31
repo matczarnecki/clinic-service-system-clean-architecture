@@ -1,8 +1,12 @@
 package com.czarnecki.clinicservicesystem.patient;
 
+import java.util.Optional;
 import java.util.Set;
-import org.springframework.data.repository.CrudRepository;
 
-interface PatientRepository extends CrudRepository<Patient, Integer> {
+interface PatientRepository {
+  Optional<Patient> findById(Integer id);
+
   Set<Patient> findAll();
+
+  Patient save(Patient entity);
 }

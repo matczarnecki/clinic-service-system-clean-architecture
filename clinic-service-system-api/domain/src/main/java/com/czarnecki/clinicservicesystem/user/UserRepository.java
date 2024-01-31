@@ -2,9 +2,10 @@ package com.czarnecki.clinicservicesystem.user;
 
 import java.util.Optional;
 import java.util.Set;
-import org.springframework.data.repository.CrudRepository;
 
-interface UserRepository extends CrudRepository<User, Integer> {
+interface UserRepository  {
+
+  Optional<User> findById(Integer id);
 
   Optional<User> findByUsername(String username);
 
@@ -15,4 +16,6 @@ interface UserRepository extends CrudRepository<User, Integer> {
   boolean existsByUsername(String username);
 
   boolean existsByEmailAddress(String emailAddress);
+
+  User save(User entity);
 }

@@ -1,10 +1,13 @@
 package com.czarnecki.clinicservicesystem.appointment;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.Set;
-import org.springframework.data.repository.CrudRepository;
 
-interface AppointmentRepository extends CrudRepository<Appointment, Integer> {
+interface AppointmentRepository {
+  Optional<Appointment> findById(Integer id);
+
+  Appointment save(Appointment entity);
 
   Set<Appointment> findByAppointmentTimeBetween(LocalDateTime from, LocalDateTime to);
 
