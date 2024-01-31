@@ -1,8 +1,11 @@
 package com.czarnecki.clinicservicesystem.user;
 
+import java.util.Optional;
 import java.util.Set;
-import org.springframework.data.repository.CrudRepository;
 
-interface RoleRepository extends CrudRepository<Role, String> {
+interface RoleRepository  {
+
+  Optional<Role> findById(String id);
+
   Set<Role> findAll();
 }
