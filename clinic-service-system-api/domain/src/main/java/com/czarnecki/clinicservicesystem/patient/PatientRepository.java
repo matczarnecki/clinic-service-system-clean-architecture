@@ -4,9 +4,9 @@ import java.util.Optional;
 import java.util.Set;
 
 interface PatientRepository {
-  Optional<Patient> findById(Integer id);
+    Optional<Patient> findById(Integer id);
 
-  Set<Patient> findAll();
+    Set<Patient> findAll();
 
-  Patient save(Patient entity);
+    Patient save(Patient entity);
 }

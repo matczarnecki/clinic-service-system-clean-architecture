@@ -3,9 +3,9 @@ package com.czarnecki.clinicservicesystem.user;
 import java.util.Optional;
 import java.util.Set;
 
-interface RoleRepository  {
+interface RoleRepository {
 
-  Optional<Role> findById(String id);
+    Optional<Role> findById(String id);
 
-  Set<Role> findAll();
+    Set<Role> findAll();
 }

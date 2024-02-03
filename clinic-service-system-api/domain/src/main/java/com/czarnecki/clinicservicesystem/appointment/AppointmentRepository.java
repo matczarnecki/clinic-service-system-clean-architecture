@@ -5,13 +5,13 @@ import java.util.Optional;
 import java.util.Set;
 
 interface AppointmentRepository {
-  Optional<Appointment> findById(Integer id);
+    Optional<Appointment> findById(Integer id);
 
-  Appointment save(Appointment entity);
+    Appointment save(Appointment entity);
 
-  Set<Appointment> findByAppointmentTimeBetween(LocalDateTime from, LocalDateTime to);
+    Set<Appointment> findByAppointmentTimeBetween(LocalDateTime from, LocalDateTime to);
 
-  Set<Appointment> findByAppointmentTimeBetweenAndDoctor_Id(LocalDateTime from, LocalDateTime to, Integer doctorId);
+    Set<Appointment> findByAppointmentTimeBetweenAndDoctor_Id(LocalDateTime from, LocalDateTime to, Integer doctorId);
 
-  Set<Appointment> findAllByAppointmentTimeBefore(LocalDateTime appointmentTime);
+    Set<Appointment> findAllByAppointmentTimeBefore(LocalDateTime appointmentTime);
 }
