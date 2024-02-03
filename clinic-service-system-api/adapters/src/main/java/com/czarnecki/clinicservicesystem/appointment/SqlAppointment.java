@@ -1,7 +1,7 @@
 package com.czarnecki.clinicservicesystem.appointment;
 
-import com.czarnecki.clinicservicesystem.user.query.SimpleUserQueryDto;
 import com.czarnecki.clinicservicesystem.patient.query.SimplePatientQueryDto;
+import com.czarnecki.clinicservicesystem.user.query.SimpleUserQueryDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

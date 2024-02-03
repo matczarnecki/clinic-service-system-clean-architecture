@@ -13,37 +13,37 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 class SecurityConfiguration {
-  private static final String[] URL_WHITELIST = {
-      "/v1/api/authentication",
-      "/v1/api/users/registration",
-      "/",
-      "/static/**",
-      "/favicon.ico",
-      "manifest.json"
-  };
+    private static final String[] URL_WHITELIST = {
+            "/v1/api/authentication",
+            "/v1/api/users/registration",
+            "/",
+            "/static/**",
+            "/favicon.ico",
+            "manifest.json"
+    };
 
-  private final JwtRequestFilter jwtRequestFilter;
-  private final AuthenticationProvider authenticationProvider;
+    private final JwtRequestFilter jwtRequestFilter;
+    private final AuthenticationProvider authenticationProvider;
 
-  SecurityConfiguration(
-      final JwtRequestFilter jwtRequestFilter,
-      final AuthenticationProvider authenticationProvider) {
-    this.jwtRequestFilter = jwtRequestFilter;
-    this.authenticationProvider = authenticationProvider;
-  }
+    SecurityConfiguration(
+            final JwtRequestFilter jwtRequestFilter,
+            final AuthenticationProvider authenticationProvider) {
+        this.jwtRequestFilter = jwtRequestFilter;
+        this.authenticationProvider = authenticationProvider;
+    }
 
-  @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http
-        .csrf(AbstractHttpConfigurer::disable)
-        .authorizeHttpRequests(auth -> auth
-            .requestMatchers(URL_WHITELIST)
-            .permitAll()
-            .anyRequest()
-            .authenticated())
-        .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        .authenticationProvider(authenticationProvider)
-        .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-    return http.build();
-  }
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(URL_WHITELIST)
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated())
+                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        return http.build();
+    }
 }

@@ -14,35 +14,35 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 class ApplicationConfig {
-  private final UserFacade userFacade;
-  private final PasswordEncoder passwordEncoder;
+    private final UserFacade userFacade;
+    private final PasswordEncoder passwordEncoder;
 
-  ApplicationConfig(final UserFacade userFacade,
-                    final PasswordEncoder passwordEncoder) {
-    this.userFacade = userFacade;
-    this.passwordEncoder = passwordEncoder;
-  }
+    ApplicationConfig(final UserFacade userFacade,
+                      final PasswordEncoder passwordEncoder) {
+        this.userFacade = userFacade;
+        this.passwordEncoder = passwordEncoder;
+    }
 
-  @Bean
-  UserDetailsService customUserDetailsService() {
-    return username -> {
-      User user = userFacade.findByUsername(username)
-          .orElseThrow(() -> new UsernameNotFoundException("Not found: " + username));
-      return new CustomUserDetails(user);
-    };
-  }
+    @Bean
+    UserDetailsService customUserDetailsService() {
+        return username -> {
+            User user = userFacade.findByUsername(username)
+                    .orElseThrow(() -> new UsernameNotFoundException("Not found: " + username));
+            return new CustomUserDetails(user);
+        };
+    }
 
-  @Bean
-  AuthenticationProvider authenticationProvider() {
-    var authenticationProvider = new DaoAuthenticationProvider();
-    authenticationProvider.setUserDetailsService(customUserDetailsService());
-    authenticationProvider.setPasswordEncoder(passwordEncoder);
-    return authenticationProvider;
-  }
+    @Bean
+    AuthenticationProvider authenticationProvider() {
+        var authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(customUserDetailsService());
+        authenticationProvider.setPasswordEncoder(passwordEncoder);
+        return authenticationProvider;
+    }
 
-  @Bean
-  AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-    return config.getAuthenticationManager();
-  }
+    @Bean
+    AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
 
 }

@@ -3,26 +3,26 @@ package com.czarnecki.clinicservicesystem.auth;
 import jakarta.validation.constraints.NotBlank;
 
 class AuthenticationRequest {
-  @NotBlank
-  private String username;
+    @NotBlank
+    private String username;
 
-  @NotBlank
-  private String password;
+    @NotBlank
+    private String password;
 
 
-  public String getUsername() {
-    return username;
-  }
+    public String getUsername() {
+        return username;
+    }
 
-  void setUsername(String username) {
-    this.username = username;
-  }
+    void setUsername(String username) {
+        this.username = username;
+    }
 
-  public String getPassword() {
-    return password;
-  }
+    public String getPassword() {
+        return password;
+    }
 
-  void setPassword(String password) {
-    this.password = password;
-  }
+    void setPassword(String password) {
+        this.password = password;
+    }
 }
