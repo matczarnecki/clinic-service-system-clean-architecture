@@ -1,6 +1,7 @@
 package com.czarnecki.clinicservicesystem.user;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 import java.util.Set;
@@ -17,10 +18,11 @@ interface SqlUserRepository extends CrudRepository<SqlUser, Integer> {
     boolean existsByEmailAddress(String emailAddress);
 }
 
+@Repository
 class UserRepositoryImpl implements UserRepository {
     private final SqlUserRepository repository;
 
-    public UserRepositoryImpl(SqlUserRepository repository) {
+    UserRepositoryImpl(SqlUserRepository repository) {
         this.repository = repository;
     }
 

@@ -1,6 +1,7 @@
 package com.czarnecki.clinicservicesystem.patient;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 import java.util.Set;
@@ -10,6 +11,7 @@ import java.util.stream.StreamSupport;
 interface SqlPatientRepository extends CrudRepository<SqlPatient, Integer> {
 }
 
+@Repository
 class PatientRepositoryImpl implements PatientRepository {
 
     private final SqlPatientRepository repository;

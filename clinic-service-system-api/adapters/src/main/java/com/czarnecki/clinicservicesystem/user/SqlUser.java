@@ -11,7 +11,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class SqlUser {
+class SqlUser {
     static SqlUser fromUser(User source) {
         var result = new SqlUser();
         result.id = source.getId();
@@ -39,7 +39,7 @@ public class SqlUser {
     private Integer numberOfFailedLogins;
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role", referencedColumnName = "code")
-    private Role role;
+    private SqlRole role;
 
     User toUser() {
         var result = new User();
