@@ -1,4 +1,4 @@
-package com.czarnecki.clinicservicesystem.appointment.query;
+package com.czarnecki.clinicservicesystem.user.query;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

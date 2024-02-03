@@ -2,7 +2,7 @@ package com.czarnecki.clinicservicesystem.appointment;
 
 import com.czarnecki.clinicservicesystem.appointment.dto.AppointmentRequestDto;
 import com.czarnecki.clinicservicesystem.patient.query.SimplePatientQueryDto;
-import com.czarnecki.clinicservicesystem.appointment.query.SimpleUserQueryDto;
+import com.czarnecki.clinicservicesystem.user.query.SimpleUserQueryDto;
 import org.springframework.stereotype.Service;
 
 @Service
