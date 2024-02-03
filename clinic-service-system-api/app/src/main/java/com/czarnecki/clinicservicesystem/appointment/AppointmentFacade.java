@@ -4,7 +4,7 @@ import com.czarnecki.clinicservicesystem.appointment.dto.AppointmentDto;
 import com.czarnecki.clinicservicesystem.appointment.dto.AppointmentRequestDto;
 import com.czarnecki.clinicservicesystem.appointment.dto.AppointmentShortResponseDto;
 import com.czarnecki.clinicservicesystem.appointment.dto.MakeAppointmentRequest;
-import com.czarnecki.clinicservicesystem.appointment.query.SimpleUserQueryDto;
+import com.czarnecki.clinicservicesystem.user.query.SimpleUserQueryDto;
 import com.czarnecki.clinicservicesystem.exception.BadRequestException;
 import com.czarnecki.clinicservicesystem.patient.PatientDto;
 import com.czarnecki.clinicservicesystem.patient.PatientFacade;

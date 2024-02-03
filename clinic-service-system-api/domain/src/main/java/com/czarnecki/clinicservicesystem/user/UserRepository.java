@@ -3,19 +3,19 @@ package com.czarnecki.clinicservicesystem.user;
 import java.util.Optional;
 import java.util.Set;
 
-interface UserRepository  {
+interface UserRepository {
 
-  Optional<User> findById(Integer id);
+    Optional<User> findById(Integer id);
 
-  Optional<User> findByUsername(String username);
+    Optional<User> findByUsername(String username);
 
-  Set<User> findAll();
+    Set<User> findAll();
 
-  Set<User> findAllByRole_Code(String doc);
+    Set<User> findAllByRole_Code(String code);
 
-  boolean existsByUsername(String username);
+    boolean existsByUsername(String username);
 
-  boolean existsByEmailAddress(String emailAddress);
+    boolean existsByEmailAddress(String emailAddress);
 
-  User save(User entity);
+    User save(User entity);
 }
