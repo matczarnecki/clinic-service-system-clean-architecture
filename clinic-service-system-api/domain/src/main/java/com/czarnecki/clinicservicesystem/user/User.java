@@ -1,111 +1,96 @@
 package com.czarnecki.clinicservicesystem.user;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-
-
-@Entity
-@Table(name = "users")
 public class User {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
-  private String username;
-  private String password;
-  private String firstName;
-  private String lastName;
-  private String emailAddress;
-  private boolean isActive;
-  private boolean isBlocked;
-  private Integer numberOfFailedLogins;
-  @OneToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "role", referencedColumnName = "code")
-  private Role role;
+    private Integer id;
+    private String username;
+    private String password;
+    private String firstName;
+    private String lastName;
+    private String emailAddress;
+    private boolean isActive;
+    private boolean isBlocked;
+    private Integer numberOfFailedLogins;
 
-  public Integer getId() {
-    return id;
-  }
+    private Role role;
 
-  void setId(Integer id) {
-    this.id = id;
-  }
+    public Integer getId() {
+        return id;
+    }
 
-  public String getUsername() {
-    return username;
-  }
+    void setId(Integer id) {
+        this.id = id;
+    }
 
-  void setUsername(String username) {
-    this.username = username;
-  }
+    public String getUsername() {
+        return username;
+    }
 
-  public String getPassword() {
-    return password;
-  }
+    void setUsername(String username) {
+        this.username = username;
+    }
 
-  void setPassword(String password) {
-    this.password = password;
-  }
+    public String getPassword() {
+        return password;
+    }
 
-  public String getEmailAddress() {
-    return emailAddress;
-  }
+    void setPassword(String password) {
+        this.password = password;
+    }
 
-  void setEmailAddress(String emailAddress) {
-    this.emailAddress = emailAddress;
-  }
+    public String getEmailAddress() {
+        return emailAddress;
+    }
 
-  public boolean isActive() {
-    return isActive;
-  }
+    void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
 
-  void setActive(boolean active) {
-    isActive = active;
-  }
+    public boolean isActive() {
+        return isActive;
+    }
 
-  public Role getRole() {
-    return role;
-  }
+    void setActive(boolean active) {
+        isActive = active;
+    }
 
-  void setRole(Role role) {
-    this.role = role;
-  }
+    public Role getRole() {
+        return role;
+    }
 
-  public String getFirstName() {
-    return firstName;
-  }
+    void setRole(Role role) {
+        this.role = role;
+    }
 
-  void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
+    public String getFirstName() {
+        return firstName;
+    }
 
-  public String getLastName() {
-    return lastName;
-  }
+    void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-  void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
+    public String getLastName() {
+        return lastName;
+    }
 
-  public boolean isBlocked() {
-    return isBlocked;
-  }
+    void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-  void setBlocked(final boolean blocked) {
-    isBlocked = blocked;
-  }
+    public boolean isBlocked() {
+        return isBlocked;
+    }
 
-  public Integer getNumberOfFailedLogins() {
-    return numberOfFailedLogins;
-  }
+    void setBlocked(final boolean blocked) {
+        isBlocked = blocked;
+    }
 
-  void setNumberOfFailedLogins(final Integer numberOfFailedLogins) {
-    this.numberOfFailedLogins = numberOfFailedLogins;
-  }
+    public Integer getNumberOfFailedLogins() {
+        return numberOfFailedLogins;
+    }
+
+    void setNumberOfFailedLogins(final Integer numberOfFailedLogins) {
+        this.numberOfFailedLogins = numberOfFailedLogins;
+    }
 }
