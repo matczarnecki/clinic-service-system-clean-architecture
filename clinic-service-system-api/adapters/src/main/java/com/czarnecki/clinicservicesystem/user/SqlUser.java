@@ -23,6 +23,7 @@ class SqlUser {
         result.isActive = source.isActive();
         result.isBlocked = source.isBlocked();
         result.numberOfFailedLogins = source.getNumberOfFailedLogins();
+        result.role = SqlRole.fromRole(source.getRole());
         return result;
     }
 
@@ -52,6 +53,7 @@ class SqlUser {
         result.setActive(isActive);
         result.setBlocked(isBlocked);
         result.setNumberOfFailedLogins(numberOfFailedLogins);
+        result.setRole(role.toRole());
         return result;
     }
 
