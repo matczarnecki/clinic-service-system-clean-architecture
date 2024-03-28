@@ -12,11 +12,7 @@
     <artifactId>monolith</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>monolith</name>
-    <description>Parent for Clinic Service System</description>
-
-    <properties>
-        <java.version>17</java.version>
-    </properties>
+    <description>Clinic Service System - monolith app</description>
 
     <dependencies>
         <dependency>
