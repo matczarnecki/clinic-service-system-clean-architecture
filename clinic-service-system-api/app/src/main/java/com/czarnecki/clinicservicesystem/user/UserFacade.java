@@ -72,7 +72,7 @@ public class UserFacade {
         return userRepository.findByUsername(username);
     }
 
-    public List<?> getUsers() {
+    public List<UserDto> getUsers() {
         var users = userQueryRepository.findAll();
         return users
                 .stream()
