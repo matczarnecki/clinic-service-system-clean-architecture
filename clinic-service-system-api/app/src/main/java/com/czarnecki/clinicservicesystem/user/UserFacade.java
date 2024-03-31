@@ -122,17 +122,4 @@ public class UserFacade {
                     userRepository.save(user);
                 });
     }
-
-    private UserDto userToUserDto(final User user) {
-        return UserDto.builder()
-                .withId(user.getId())
-                .withUsername(user.getUsername())
-                .withEmail(user.getEmailAddress())
-                .withActive(user.isActive())
-                .withRole(user.getRole().getCode())
-                .withFirstName(user.getFirstName())
-                .withLastName(user.getLastName())
-                .withBlocked(user.isBlocked())
-                .build();
-    }
 }
