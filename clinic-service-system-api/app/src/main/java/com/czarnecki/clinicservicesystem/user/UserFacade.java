@@ -8,7 +8,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -65,14 +64,9 @@ public class UserFacade {
                 );
     }
 
+    // TODO read operation to be removed from the facade
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
-    }
-
-    public UserDto getUser(Integer id) {
-        var user = userRepository.findById(id)
-                .orElseThrow(() -> new BadRequestException("User not found"));
-        return userToUserDto(user);
     }
 
     public void editUser(Integer id, EditUserRequest request) {

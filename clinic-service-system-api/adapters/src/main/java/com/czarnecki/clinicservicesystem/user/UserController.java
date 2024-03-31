@@ -1,6 +1,7 @@
 package com.czarnecki.clinicservicesystem.user;
 
 import com.czarnecki.clinicservicesystem.auth.CustomUserDetails;
+import com.czarnecki.clinicservicesystem.exception.BadRequestException;
 import com.czarnecki.clinicservicesystem.user.dto.EditUserRequest;
 import com.czarnecki.clinicservicesystem.user.dto.RegisterUserRequest;
 import com.czarnecki.clinicservicesystem.user.dto.UserDto;
@@ -48,13 +49,17 @@ class UserController {
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('CAN_SEE_USERS')")
     ResponseEntity<UserDto> getUser(@PathVariable Integer id) {
-        return ResponseEntity.ok(userFacade.getUser(id));
+        return userQueryRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElseThrow(() -> new BadRequestException("User not found"));
     }
 
     @GetMapping("/me")
     ResponseEntity<UserDto> getLoggedUser(Authentication auth) {
         var user = (CustomUserDetails) auth.getPrincipal();
-        return ResponseEntity.ok(userFacade.getUser(user.getId()));
+        return userQueryRepository.findById(user.getId())
+                .map(ResponseEntity::ok)
+                .orElseThrow(() -> new BadRequestException("User not found"));
     }
 
     @PatchMapping("/{id}")
