@@ -1,7 +1,5 @@
-package com.czarnecki.clinicservicesystem.auth;
+package com.czarnecki.clinicservicesystem.exception;
 
-import com.czarnecki.clinicservicesystem.dto.ApiBasicResponse;
-import com.czarnecki.clinicservicesystem.exception.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
