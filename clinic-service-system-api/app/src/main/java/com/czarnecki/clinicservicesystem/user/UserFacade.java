@@ -14,18 +14,15 @@ import java.util.Optional;
 @Service
 public class UserFacade {
     private final UserRepository userRepository;
-    private final UserQueryRepository userQueryRepository;
     private final RoleFacade roleFacade;
     private final PasswordEncoder passwordEncoder;
 
     private static final int MAX_NUMBER_OF_FAILED_LOGINS = 3;
 
     UserFacade(final UserRepository userRepository,
-               final UserQueryRepository userQueryRepository,
                final RoleFacade roleFacade,
                final PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.userQueryRepository = userQueryRepository;
         this.roleFacade = roleFacade;
         this.passwordEncoder = passwordEncoder;
     }
@@ -72,14 +69,6 @@ public class UserFacade {
         return userRepository.findByUsername(username);
     }
 
-    public List<UserDto> getUsers() {
-        var users = userQueryRepository.findAll();
-        return users
-                .stream()
-                .map(this::userToUserDto)
-                .toList();
-    }
-
     public UserDto getUser(Integer id) {
         var user = userRepository.findById(id)
                 .orElseThrow(() -> new BadRequestException("User not found"));
@@ -105,13 +94,6 @@ public class UserFacade {
                 .orElseThrow(() -> new BadRequestException("User not found"));
         user.setActive(false);
         userRepository.save(user);
-    }
-
-    public List<UserDto> getDoctors() {
-        return userQueryRepository.findAllByRoleCode("DOC")
-                .stream()
-                .map(this::userToUserDto)
-                .toList();
     }
 
     public void handleCorrectAuthentication(String username) {

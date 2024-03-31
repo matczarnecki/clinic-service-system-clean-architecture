@@ -23,9 +23,12 @@ import java.util.List;
 @RequestMapping("/v1/api/users")
 class UserController {
     private final UserFacade userFacade;
+    private final UserQueryRepository userQueryRepository;
 
-    UserController(final UserFacade userFacade) {
+    UserController(final UserFacade userFacade,
+                   final UserQueryRepository userQueryRepository) {
         this.userFacade = userFacade;
+        this.userQueryRepository = userQueryRepository;
     }
 
     @PostMapping("/registration")
@@ -37,7 +40,9 @@ class UserController {
     @GetMapping
     @PreAuthorize("hasAuthority('CAN_SEE_USERS')")
     List<UserDto> getUsers() {
-        return userFacade.getUsers();
+        return userQueryRepository.findAll()
+                .stream()
+                .toList();
     }
 
     @GetMapping("/{id}")
@@ -76,6 +81,8 @@ class UserController {
     @GetMapping("/doctors")
     @PreAuthorize("hasAuthority('CAN_SEE_DOCTORS')")
     List<UserDto> getDoctors() {
-        return userFacade.getDoctors();
+        return userQueryRepository.findAllByRoleCode("DOC")
+                .stream()
+                .toList();
     }
 }

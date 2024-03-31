@@ -1,14 +1,15 @@
 package com.czarnecki.clinicservicesystem.user;
 
+import com.czarnecki.clinicservicesystem.user.dto.UserDto;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 interface SqlUserQueryRepository extends CrudRepository<SqlUser, Integer> {
-    Set<SqlUser> findAllByRoleCode(String roleCode);
+    Set<UserDto> findAllByRoleCode(String roleCode);
+
+    Set<UserDto> findAllBy();
 }
 
 @Repository
@@ -20,18 +21,12 @@ class SqlUserRepositoryImpl implements UserQueryRepository {
     }
 
     @Override
-    public Set<User> findAll() {
-        return StreamSupport
-                .stream(repository.findAll().spliterator(), false)
-                .map(SqlUser::toUser)
-                .collect(Collectors.toSet());
+    public Set<UserDto> findAll() {
+        return repository.findAllBy();
     }
 
     @Override
-    public Set<User> findAllByRoleCode(String roleCode) {
-        return repository.findAllByRoleCode(roleCode)
-                .stream()
-                .map(SqlUser::toUser)
-                .collect(Collectors.toSet());
+    public Set<UserDto> findAllByRoleCode(String roleCode) {
+        return repository.findAllByRoleCode(roleCode);
     }
 }

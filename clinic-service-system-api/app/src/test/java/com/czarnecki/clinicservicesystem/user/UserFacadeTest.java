@@ -24,8 +24,6 @@ class UserFacadeTest {
     @Mock
     private UserRepository mockUserRepository;
     @Mock
-    private UserQueryRepository mockUserQueryRepository;
-    @Mock
     private RoleFacade mockRoleFacade;
     @Mock
     private PasswordEncoder mockPasswordEncoder;
@@ -37,7 +35,7 @@ class UserFacadeTest {
         var registerUserRequest = getRegisterUserMockRequest();
         when(mockUserRepository.existsByUsername(anyString())).thenReturn(true);
 
-        var toTest = new UserFacade(mockUserRepository, mockUserQueryRepository, null, null);
+        var toTest = new UserFacade(mockUserRepository, null, null);
 
         // when
         var exception = catchThrowable(() -> toTest.registerNewUser(registerUserRequest));
@@ -56,7 +54,7 @@ class UserFacadeTest {
         when(mockUserRepository.existsByUsername(anyString())).thenReturn(false);
         when(mockUserRepository.existsByEmailAddress(anyString())).thenReturn(true);
 
-        var toTest = new UserFacade(mockUserRepository, mockUserQueryRepository, null, null);
+        var toTest = new UserFacade(mockUserRepository, null, null);
 
         // when
         var exception = catchThrowable(() -> toTest.registerNewUser(registerUserRequest));
@@ -76,7 +74,7 @@ class UserFacadeTest {
         when(mockUserRepository.existsByEmailAddress(anyString())).thenReturn(false);
         when(mockRoleFacade.findById(anyString())).thenReturn(Optional.empty());
 
-        var toTest = new UserFacade(mockUserRepository, mockUserQueryRepository, mockRoleFacade, null);
+        var toTest = new UserFacade(mockUserRepository, mockRoleFacade, null);
 
         // when
         var exception = catchThrowable(() -> toTest.registerNewUser(registerUserRequest));
@@ -97,7 +95,7 @@ class UserFacadeTest {
         when(mockRoleFacade.findById(anyString())).thenReturn(Optional.of(new Role()));
         when(mockPasswordEncoder.encode(anyString())).thenReturn("encoded");
 
-        var toTest = new UserFacade(mockUserRepository, mockUserQueryRepository, mockRoleFacade, mockPasswordEncoder);
+        var toTest = new UserFacade(mockUserRepository, mockRoleFacade, mockPasswordEncoder);
 
         // when
         toTest.registerNewUser(registerUserRequest);
@@ -113,7 +111,7 @@ class UserFacadeTest {
         int userId = 1;
         when(mockUserRepository.findById(anyInt())).thenReturn(Optional.empty());
 
-        var toTest = new UserFacade(mockUserRepository, mockUserQueryRepository, null, null);
+        var toTest = new UserFacade(mockUserRepository, null, null);
 
         // when
         var result = toTest.findById(userId);
@@ -130,7 +128,7 @@ class UserFacadeTest {
         var mockUser = getUserMockEntityWithId(userId);
         when(mockUserRepository.findById(anyInt())).thenReturn(Optional.of(mockUser));
 
-        var toTest = new UserFacade(mockUserRepository, mockUserQueryRepository, null, null);
+        var toTest = new UserFacade(mockUserRepository, null, null);
 
         // when
         var result = toTest.findById(userId);

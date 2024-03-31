@@ -98,7 +98,7 @@ public class AppointmentFacade {
                         doctorDto.getId(),
                         doctorDto.getFirstName(),
                         doctorDto.getLastName(),
-                        doctorDto.getEmail()
+                        doctorDto.getEmailAddress()
                 );
 
         var patientQueryDto =
