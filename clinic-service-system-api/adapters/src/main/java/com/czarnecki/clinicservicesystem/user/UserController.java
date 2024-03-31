@@ -63,14 +63,14 @@ class UserController {
     @PreAuthorize("hasAuthority('CAN_EDIT_USERS')")
     ResponseEntity<String> disableUser(@PathVariable Integer id) {
         userFacade.disableUser(id);
-        return ResponseEntity.ok("User has been disabled!");
+        return ResponseEntity.ok("User has been disabled");
     }
 
     @PatchMapping("{id}/unlock")
     @PreAuthorize("hasAuthority('CAN_EDIT_USERS')")
     ResponseEntity<String> unlockAccount(@PathVariable Integer id) {
         userFacade.unlockAccount(id);
-        return ResponseEntity.ok("Account has been unlocked!");
+        return ResponseEntity.ok("Account has been unlocked");
     }
 
     @GetMapping("/doctors")
