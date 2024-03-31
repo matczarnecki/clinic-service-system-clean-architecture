@@ -9,10 +9,6 @@ interface UserRepository {
 
     Optional<User> findByUsername(String username);
 
-    Set<User> findAll();
-
-    Set<User> findAllByRoleCode(String code);
-
     boolean existsByUsername(String username);
 
     boolean existsByEmailAddress(String emailAddress);

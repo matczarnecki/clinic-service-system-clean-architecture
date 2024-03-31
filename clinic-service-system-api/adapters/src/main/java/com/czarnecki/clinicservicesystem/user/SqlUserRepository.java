@@ -4,14 +4,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 interface SqlUserRepository extends CrudRepository<SqlUser, Integer> {
     Optional<SqlUser> findByUsername(String username);
-
-    Set<SqlUser> findAllByRole_Code(String doc);
 
     boolean existsByUsername(String username);
 
@@ -38,21 +33,6 @@ class UserRepositoryImpl implements UserRepository {
                 .map(SqlUser::toUser);
     }
 
-    @Override
-    public Set<User> findAll() {
-        return StreamSupport
-                .stream(repository.findAll().spliterator(), false)
-                .map(SqlUser::toUser)
-                .collect(Collectors.toSet());
-    }
-
-    @Override
-    public Set<User> findAllByRoleCode(String code) {
-        return repository.findAllByRole_Code(code)
-                .stream()
-                .map(SqlUser::toUser)
-                .collect(Collectors.toSet());
-    }
 
     @Override
     public boolean existsByUsername(String username) {
