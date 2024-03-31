@@ -21,60 +21,60 @@ import java.util.List;
 @RestController
 @RequestMapping("/v1/api/users")
 class UserController {
-    private final UserFacade userService;
+    private final UserFacade userFacade;
 
-    UserController(final UserFacade userService) {
-        this.userService = userService;
+    UserController(final UserFacade userFacade) {
+        this.userFacade = userFacade;
     }
 
     @PostMapping("/registration")
     ResponseEntity<?> registerUser(@Valid @RequestBody RegisterUserRequest request) {
-        userService.registerNewUser(request);
+        userFacade.registerNewUser(request);
         return ResponseEntity.ok("Successful registration");
     }
 
     @GetMapping
     @PreAuthorize("hasAuthority('CAN_SEE_USERS')")
     List<?> getUsers() {
-        return userService.getUsers();
+        return userFacade.getUsers();
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('CAN_SEE_USERS')")
     ResponseEntity<?> getUser(@PathVariable Integer id) {
-        return ResponseEntity.ok(userService.getUser(id));
+        return ResponseEntity.ok(userFacade.getUser(id));
     }
 
     @GetMapping("/me")
     ResponseEntity<?> getLoggedUser(Authentication auth) {
         var user = (CustomUserDetails) auth.getPrincipal();
-        return ResponseEntity.ok(userService.getUser(user.getId()));
+        return ResponseEntity.ok(userFacade.getUser(user.getId()));
     }
 
     @PatchMapping("/{id}")
     @PreAuthorize("hasAuthority('CAN_EDIT_USERS')")
     ResponseEntity<?> editUser(@PathVariable Integer id, @RequestBody @Valid EditUserRequest request) {
-        userService.editUser(id, request);
+        userFacade.editUser(id, request);
         return ResponseEntity.ok("User has been modified");
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('CAN_EDIT_USERS')")
     ResponseEntity<?> disableUser(@PathVariable Integer id) {
-        userService.disableUser(id);
+        userFacade.disableUser(id);
         return ResponseEntity.ok("User has been disabled!");
     }
 
     @PatchMapping("{id}/unlock")
     @PreAuthorize("hasAuthority('CAN_EDIT_USERS')")
     ResponseEntity<?> unlockAccount(@PathVariable Integer id) {
-        userService.unlockAccount(id);
+        userFacade.unlockAccount(id);
         return ResponseEntity.ok("Account has been unlocked!");
     }
 
     @GetMapping("/doctors")
     @PreAuthorize("hasAuthority('CAN_SEE_DOCTORS')")
     List<?> getDoctors() {
-        return userService.getDoctors();
+        return userFacade.getDoctors();
     }
 }
