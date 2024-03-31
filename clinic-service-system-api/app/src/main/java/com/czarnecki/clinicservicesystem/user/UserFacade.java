@@ -104,7 +104,7 @@ public class UserFacade {
   }
 
   public List<UserDto> getDoctors() {
-    return userRepository.findAllByRole_Code("DOC")
+    return userRepository.findAllByRoleCode("DOC")
         .stream()
         .map(this::userToUserDto)
         .toList();

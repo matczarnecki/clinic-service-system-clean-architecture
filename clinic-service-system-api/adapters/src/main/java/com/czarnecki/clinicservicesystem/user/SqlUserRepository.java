@@ -47,7 +47,7 @@ class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Set<User> findAllByRole_Code(String code) {
+    public Set<User> findAllByRoleCode(String code) {
         return repository.findAllByRole_Code(code)
                 .stream()
                 .map(SqlUser::toUser)

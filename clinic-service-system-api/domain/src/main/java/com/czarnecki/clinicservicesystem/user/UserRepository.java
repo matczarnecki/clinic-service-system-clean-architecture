@@ -11,7 +11,7 @@ interface UserRepository {
 
     Set<User> findAll();
 
-    Set<User> findAllByRole_Code(String code);
+    Set<User> findAllByRoleCode(String code);
 
     boolean existsByUsername(String username);
 
