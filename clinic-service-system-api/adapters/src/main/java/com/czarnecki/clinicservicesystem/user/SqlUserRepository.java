@@ -1,9 +1,8 @@
 package com.czarnecki.clinicservicesystem.user;
 
+import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
 
 interface SqlUserRepository extends CrudRepository<SqlUser, Integer> {
     Optional<SqlUser> findByUsername(String username);
@@ -12,6 +11,7 @@ interface SqlUserRepository extends CrudRepository<SqlUser, Integer> {
 
     boolean existsByEmailAddress(String emailAddress);
 }
+
 
 @Repository
 class UserRepositoryImpl implements UserRepository {
@@ -24,13 +24,13 @@ class UserRepositoryImpl implements UserRepository {
     @Override
     public Optional<User> findById(Integer id) {
         return repository.findById(id)
-                .map(SqlUser::toUser);
+            .map(SqlUser::toUser);
     }
 
     @Override
     public Optional<User> findByUsername(String username) {
         return repository.findByUsername(username)
-                .map(SqlUser::toUser);
+            .map(SqlUser::toUser);
     }
 
 

@@ -1,28 +1,13 @@
-package com.czarnecki.clinicservicesystem.user.query;
+package com.czarnecki.clinicservicesystem.user.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 @JsonDeserialize(builder = RoleDto.Builder.class)
-public class RoleDto {
-  private final String code;
-  private final String name;
-
-  private RoleDto(Builder builder) {
-    this.code = builder.code;
-    this.name = builder.name;
-  }
+public record RoleDto(String code, String name) {
 
   public static Builder builder() {
     return new Builder();
-  }
-
-  public String getCode() {
-    return code;
-  }
-
-  public String getName() {
-    return name;
   }
 
   @JsonPOJOBuilder
@@ -35,7 +20,7 @@ public class RoleDto {
     }
 
     public RoleDto build() {
-      return new RoleDto(this);
+      return new RoleDto(this.code, this.name);
     }
 
     public Builder withCode(final String code) {

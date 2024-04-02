@@ -4,25 +4,24 @@ import com.czarnecki.clinicservicesystem.exception.BadRequestException;
 import com.czarnecki.clinicservicesystem.user.dto.EditUserRequest;
 import com.czarnecki.clinicservicesystem.user.dto.RegisterUserRequest;
 import com.czarnecki.clinicservicesystem.user.dto.UserDto;
+import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class UserFacade {
     private final UserRepository userRepository;
-    private final RoleFacade roleFacade;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
     private static final int MAX_NUMBER_OF_FAILED_LOGINS = 3;
 
     UserFacade(final UserRepository userRepository,
-               final RoleFacade roleFacade,
-               final PasswordEncoder passwordEncoder) {
+        final RoleRepository roleRepository,
+        final PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.roleFacade = roleFacade;
+        this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -34,9 +33,8 @@ public class UserFacade {
             throw new BadRequestException("User with this email address already exists");
         }
 
-        Role role = roleFacade.findById(request.getRole()).orElseThrow(() ->
-                new BadRequestException("Role provided for user doesn't exist")
-        );
+        var role = roleRepository.findByCode(request.getRole())
+            .orElseThrow(() -> new BadRequestException("Role provided for user doesn't exist"));
 
         var newUser = new User();
         newUser.setUsername(request.getUsername());
@@ -51,17 +49,17 @@ public class UserFacade {
 
     public Optional<UserDto> findById(int userId) {
         return userRepository.findById(userId)
-                .map(user -> UserDto.builder()
-                        .withId(user.getId())
-                        .withUsername(user.getUsername())
-                        .withEmail(user.getEmailAddress())
-                        .withActive(user.isActive())
-                        .withRole(user.getRole().getName())
-                        .withFirstName(user.getFirstName())
-                        .withLastName(user.getLastName())
-                        .withBlocked(user.isBlocked())
-                        .build()
-                );
+            .map(user -> UserDto.builder()
+                .withId(user.getId())
+                .withUsername(user.getUsername())
+                .withEmail(user.getEmailAddress())
+                .withActive(user.isActive())
+                .withRole(user.getRole().getName())
+                .withFirstName(user.getFirstName())
+                .withLastName(user.getLastName())
+                .withBlocked(user.isBlocked())
+                .build()
+            );
     }
 
     // TODO read operation to be removed from the facade
@@ -71,7 +69,7 @@ public class UserFacade {
 
     public void editUser(Integer id, EditUserRequest request) {
         var user = userRepository.findById(id)
-                .orElseThrow(() -> new BadRequestException("User not found"));
+            .orElseThrow(() -> new BadRequestException("User not found"));
         user.setUsername(request.getUsername());
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
@@ -84,8 +82,8 @@ public class UserFacade {
 
     public void disableUser(Integer id) {
         var user = userRepository
-                .findById(id)
-                .orElseThrow(() -> new BadRequestException("User not found"));
+            .findById(id)
+            .orElseThrow(() -> new BadRequestException("User not found"));
         user.setActive(false);
         userRepository.save(user);
     }
@@ -116,10 +114,10 @@ public class UserFacade {
 
     public void unlockAccount(Integer id) {
         userRepository.findById(id)
-                .ifPresent(user -> {
-                    user.setBlocked(false);
-                    user.setNumberOfFailedLogins(0);
-                    userRepository.save(user);
-                });
+            .ifPresent(user -> {
+                user.setBlocked(false);
+                user.setNumberOfFailedLogins(0);
+                userRepository.save(user);
+            });
     }
 }
