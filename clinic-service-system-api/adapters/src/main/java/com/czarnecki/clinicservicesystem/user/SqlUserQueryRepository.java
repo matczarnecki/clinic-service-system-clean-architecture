@@ -1,11 +1,10 @@
 package com.czarnecki.clinicservicesystem.user;
 
 import com.czarnecki.clinicservicesystem.user.dto.UserDto;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
-
 import java.util.Optional;
 import java.util.Set;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 interface SqlUserQueryRepository extends CrudRepository<SqlUser, Integer> {
     <T> Optional<T> findById(Integer id, Class<T> type);
@@ -15,11 +14,12 @@ interface SqlUserQueryRepository extends CrudRepository<SqlUser, Integer> {
     Set<UserDto> findAllBy();
 }
 
+
 @Repository
-class SqlUserRepositoryImpl implements UserQueryRepository {
+class UserQueryRepositoryImpl implements UserQueryRepository {
     private final SqlUserQueryRepository repository;
 
-    SqlUserRepositoryImpl(final SqlUserQueryRepository repository) {
+    UserQueryRepositoryImpl(final SqlUserQueryRepository repository) {
         this.repository = repository;
     }
 
