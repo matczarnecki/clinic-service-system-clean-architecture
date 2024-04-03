@@ -14,15 +14,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/api/patients")
 class PatientController {
     private final PatientFacade patientFacade;
+    private final PatientQueryRepository patientQueryRepository;
 
-    PatientController(final PatientFacade patientService) {
+    PatientController(final PatientFacade patientService,
+        final PatientQueryRepository patientQueryRepository) {
         this.patientFacade = patientService;
+        this.patientQueryRepository = patientQueryRepository;
     }
 
     @GetMapping
     @PreAuthorize("hasAuthority('CAN_SEE_PATIENTS')")
     ResponseEntity<List<PatientDto>> getPatients() {
-        return ResponseEntity.ok(patientFacade.getPatients());
+        return ResponseEntity.ok(patientQueryRepository
+            .findAll()
+            .stream()
+            .toList());
     }
 
     @PostMapping

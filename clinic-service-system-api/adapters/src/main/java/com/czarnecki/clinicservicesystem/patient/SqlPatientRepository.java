@@ -1,15 +1,12 @@
 package com.czarnecki.clinicservicesystem.patient;
 
+import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
 interface SqlPatientRepository extends CrudRepository<SqlPatient, Integer> {
 }
+
 
 @Repository
 class PatientRepositoryImpl implements PatientRepository {
@@ -23,15 +20,7 @@ class PatientRepositoryImpl implements PatientRepository {
     @Override
     public Optional<Patient> findById(Integer id) {
         return repository.findById(id)
-                .map(SqlPatient::toPatient);
-    }
-
-    @Override
-    public Set<Patient> findAll() {
-        return StreamSupport
-                .stream(repository.findAll().spliterator(), false)
-                .map(SqlPatient::toPatient)
-                .collect(Collectors.toSet());
+            .map(SqlPatient::toPatient);
     }
 
     @Override
