@@ -1,6 +1,7 @@
 package com.czarnecki.clinicservicesystem.patient;
 
 import jakarta.validation.Valid;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,14 +21,14 @@ class PatientController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('CAN_SEE_PATIENTS')")
-    ResponseEntity<?> getPatients() {
+    ResponseEntity<List<PatientDto>> getPatients() {
         return ResponseEntity.ok(patientFacade.getPatients());
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('CAN_ADD_PATIENTS')")
-    ResponseEntity<?> addPatient(@RequestBody @Valid PatientDto request) {
+    ResponseEntity<String> addPatient(@RequestBody @Valid PatientDto request) {
         patientFacade.addPatient(request);
-        return ResponseEntity.ok("Patient has been created!");
+        return ResponseEntity.ok("Patient has been created");
     }
 }
