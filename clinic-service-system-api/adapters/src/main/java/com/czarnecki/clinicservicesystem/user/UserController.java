@@ -6,6 +6,7 @@ import com.czarnecki.clinicservicesystem.user.dto.EditUserRequest;
 import com.czarnecki.clinicservicesystem.user.dto.RegisterUserRequest;
 import com.czarnecki.clinicservicesystem.user.dto.UserDto;
 import jakarta.validation.Valid;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -18,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/v1/api/users")
 class UserController {
@@ -27,7 +26,7 @@ class UserController {
     private final UserQueryRepository userQueryRepository;
 
     UserController(final UserFacade userFacade,
-                   final UserQueryRepository userQueryRepository) {
+        final UserQueryRepository userQueryRepository) {
         this.userFacade = userFacade;
         this.userQueryRepository = userQueryRepository;
     }
@@ -42,24 +41,24 @@ class UserController {
     @PreAuthorize("hasAuthority('CAN_SEE_USERS')")
     List<UserDto> getUsers() {
         return userQueryRepository.findAll()
-                .stream()
-                .toList();
+            .stream()
+            .toList();
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('CAN_SEE_USERS')")
     ResponseEntity<UserDto> getUser(@PathVariable Integer id) {
         return userQueryRepository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElseThrow(() -> new BadRequestException("User not found"));
+            .map(ResponseEntity::ok)
+            .orElseThrow(() -> new BadRequestException("User not found"));
     }
 
     @GetMapping("/me")
     ResponseEntity<UserDto> getLoggedUser(Authentication auth) {
         var user = (CustomUserDetails) auth.getPrincipal();
         return userQueryRepository.findById(user.getId())
-                .map(ResponseEntity::ok)
-                .orElseThrow(() -> new BadRequestException("User not found"));
+            .map(ResponseEntity::ok)
+            .orElseThrow(() -> new BadRequestException("User not found"));
     }
 
     @PatchMapping("/{id}")
@@ -87,7 +86,7 @@ class UserController {
     @PreAuthorize("hasAuthority('CAN_SEE_DOCTORS')")
     List<UserDto> getDoctors() {
         return userQueryRepository.findAllByRoleCode("DOC")
-                .stream()
-                .toList();
+            .stream()
+            .toList();
     }
 }
