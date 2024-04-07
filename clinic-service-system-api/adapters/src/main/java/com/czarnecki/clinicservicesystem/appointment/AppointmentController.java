@@ -1,9 +1,13 @@
 package com.czarnecki.clinicservicesystem.appointment;
 
+import com.czarnecki.clinicservicesystem.appointment.dto.AppointmentDto;
 import com.czarnecki.clinicservicesystem.appointment.dto.AppointmentRequestDto;
 import com.czarnecki.clinicservicesystem.appointment.dto.MakeAppointmentRequest;
 import com.czarnecki.clinicservicesystem.auth.CustomUserDetails;
+import com.czarnecki.clinicservicesystem.exception.BadRequestException;
 import jakarta.validation.Valid;
+import java.time.LocalDate;
+import java.util.List;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,63 +22,73 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
-
 @RestController
 @RequestMapping("/v1/api/appointments")
 class AppointmentController {
     private final AppointmentFacade appointmentFacade;
+    private final AppointmentQueryRepository appointmentQueryRepository;
 
-    AppointmentController(final AppointmentFacade appointmentService) {
+    AppointmentController(final AppointmentFacade appointmentService,
+        final AppointmentQueryRepository appointmentQueryRepository) {
         this.appointmentFacade = appointmentService;
+        this.appointmentQueryRepository = appointmentQueryRepository;
     }
 
-    @GetMapping()
+    @GetMapping
     @PreAuthorize("hasAuthority('CAN_SEE_APPOINTMENTS')")
-    ResponseEntity<?> getAppointments(@RequestParam(name = "date")
-                                      @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-                                      @RequestParam(name = "doctor", required = false) Integer doctorId) {
-        return ResponseEntity.ok(appointmentFacade.getAppointmentsForDay(date));
+    ResponseEntity<List<AppointmentDto>> getAppointments(@RequestParam(name = "date")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        return ResponseEntity.ok(appointmentQueryRepository.findAppointmentForDay(date)
+            .stream()
+            .toList());
     }
 
     @GetMapping("/doctor")
     @PreAuthorize("hasAuthority('CAN_SEE_FULL_APPOINTMENTS')")
-    ResponseEntity<?> getDoctorAppointments(@RequestParam(name = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                                            LocalDate date, Authentication auth) {
+    ResponseEntity<List<AppointmentDto>> getDoctorAppointments(
+        @RequestParam(name = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+        LocalDate date, Authentication auth) {
         CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
-        return ResponseEntity.ok(appointmentFacade.getDoctorAppointmentsForDay(date, user.getId()));
+        return ResponseEntity.ok(
+            appointmentQueryRepository.findDoctorAppointmentsForDay(date, user.getId())
+                .stream()
+                .toList());
     }
 
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('CAN_CANCEL_APPOINTMENTS')")
-    ResponseEntity<?> cancelAppointment(@PathVariable Integer id) {
+    ResponseEntity<String> cancelAppointment(@PathVariable Integer id) {
         appointmentFacade.cancelAppointment(id);
         return ResponseEntity.ok("The appointment was cancelled!");
     }
 
     @PostMapping()
     @PreAuthorize("hasAuthority('CAN_ADD_APPOINTMENTS')")
-    ResponseEntity<?> addAppointment(@RequestBody @Valid AppointmentRequestDto request) {
+    ResponseEntity<String> addAppointment(@RequestBody @Valid AppointmentRequestDto request) {
         appointmentFacade.createAppointment(request);
         return ResponseEntity.ok("The appointment was scheduled!");
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('CAN_SEE_FULL_APPOINTMENTS')")
-    ResponseEntity<?> getAppointment(@PathVariable Integer id) {
-        return ResponseEntity.ok(appointmentFacade.getAppointment(id));
+    ResponseEntity<AppointmentDto> getAppointment(@PathVariable Integer id) {
+        return ResponseEntity.ok(appointmentQueryRepository.findById(id)
+            .orElseThrow(() -> new BadRequestException("Appointment with id: " + id + " was not found")));
     }
 
     @GetMapping("/patient/{appointmentId}")
     @PreAuthorize("hasAuthority('CAN_SEE_PATIENT_APPOINTMENTS')")
-    ResponseEntity<?> getPatientAppointments(@PathVariable Integer appointmentId) {
-        return ResponseEntity.ok(appointmentFacade.getPatientAppointments(appointmentId));
+    ResponseEntity<List<AppointmentDto>> getPatientAppointments(@PathVariable Integer appointmentId) {
+        return ResponseEntity.ok(appointmentQueryRepository.findAllPreviousPatientAppointments(appointmentId)
+            .stream()
+            .toList());
     }
 
     @PatchMapping("/{id}")
     @PreAuthorize("hasAuthority('CAN_MAKE_APPOINTMENTS')")
-    ResponseEntity<?> makeAppointment(@PathVariable Integer id, @RequestBody @Valid MakeAppointmentRequest request) {
+    ResponseEntity<String> makeAppointment(@PathVariable Integer id,
+        @RequestBody @Valid MakeAppointmentRequest request) {
         appointmentFacade.makeAppointment(id, request);
         return ResponseEntity.ok("The appointment has been finished!");
     }
