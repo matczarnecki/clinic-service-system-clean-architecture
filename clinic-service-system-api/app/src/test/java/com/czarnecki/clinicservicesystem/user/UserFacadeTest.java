@@ -1,16 +1,5 @@
 package com.czarnecki.clinicservicesystem.user;
 
-import com.czarnecki.clinicservicesystem.exception.BadRequestException;
-import com.czarnecki.clinicservicesystem.user.dto.RegisterUserRequest;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.ArgumentMatchers.any;
@@ -19,12 +8,24 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.czarnecki.clinicservicesystem.exception.BadRequestException;
+import com.czarnecki.clinicservicesystem.user.dto.RegisterUserRequest;
+import java.util.Optional;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 @ExtendWith(MockitoExtension.class)
 class UserFacadeTest {
     @Mock
     private UserRepository mockUserRepository;
+
     @Mock
-    private RoleFacade mockRoleFacade;
+    private RoleRepository roleRepository;
+
     @Mock
     private PasswordEncoder mockPasswordEncoder;
 
@@ -42,8 +43,8 @@ class UserFacadeTest {
 
         // then
         assertThat(exception)
-                .isInstanceOf(BadRequestException.class)
-                .hasMessage("User with this username already exists");
+            .isInstanceOf(BadRequestException.class)
+            .hasMessage("User with this username already exists");
     }
 
     @Test
@@ -61,8 +62,8 @@ class UserFacadeTest {
 
         // then
         assertThat(exception)
-                .isInstanceOf(BadRequestException.class)
-                .hasMessage("User with this email address already exists");
+            .isInstanceOf(BadRequestException.class)
+            .hasMessage("User with this email address already exists");
     }
 
     @Test
@@ -72,17 +73,17 @@ class UserFacadeTest {
         var registerUserRequest = getRegisterUserMockRequest();
         when(mockUserRepository.existsByUsername(anyString())).thenReturn(false);
         when(mockUserRepository.existsByEmailAddress(anyString())).thenReturn(false);
-        when(mockRoleFacade.findById(anyString())).thenReturn(Optional.empty());
+        when(roleRepository.findByCode(anyString())).thenReturn(Optional.empty());
 
-        var toTest = new UserFacade(mockUserRepository, mockRoleFacade, null);
+        var toTest = new UserFacade(mockUserRepository, roleRepository, null);
 
         // when
         var exception = catchThrowable(() -> toTest.registerNewUser(registerUserRequest));
 
         // then
         assertThat(exception)
-                .isInstanceOf(BadRequestException.class)
-                .hasMessage("Role provided for user doesn't exist");
+            .isInstanceOf(BadRequestException.class)
+            .hasMessage("Role provided for user doesn't exist");
     }
 
     @Test
@@ -92,10 +93,10 @@ class UserFacadeTest {
         var registerUserRequest = getRegisterUserMockRequest();
         when(mockUserRepository.existsByUsername(anyString())).thenReturn(false);
         when(mockUserRepository.existsByEmailAddress(anyString())).thenReturn(false);
-        when(mockRoleFacade.findById(anyString())).thenReturn(Optional.of(new Role()));
+        when(roleRepository.findByCode(anyString())).thenReturn(Optional.empty());
         when(mockPasswordEncoder.encode(anyString())).thenReturn("encoded");
 
-        var toTest = new UserFacade(mockUserRepository, mockRoleFacade, mockPasswordEncoder);
+        var toTest = new UserFacade(mockUserRepository, roleRepository, mockPasswordEncoder);
 
         // when
         toTest.registerNewUser(registerUserRequest);
@@ -135,16 +136,16 @@ class UserFacadeTest {
 
         // then
         assertThat(result)
-                .isPresent()
-                .hasValueSatisfying(userDto -> {
-                    assertThat(userDto.getId()).isEqualTo(userId);
-                });
+            .isPresent()
+            .hasValueSatisfying(userDto -> {
+                assertThat(userDto.getId()).isEqualTo(userId);
+            });
     }
 
     private RegisterUserRequest getRegisterUserMockRequest() {
         return new RegisterUserRequest("username", "password",
-                "first name", "last name",
-                "email@email.com", "role");
+            "first name", "last name",
+            "email@email.com", "role");
     }
 
     private User getUserMockEntityWithId(int userId) {

@@ -11,7 +11,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -54,5 +53,33 @@ class SqlAppointment {
         result.setDiagnosis(diagnosis);
         result.setDescription(description);
         return result;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public LocalDateTime getAppointmentTime() {
+        return appointmentTime;
+    }
+
+    public SimpleUserQueryDto getDoctor() {
+        return doctor;
+    }
+
+    public SimplePatientQueryDto getPatient() {
+        return patient;
+    }
+
+    public AppointmentStatus getStatus() {
+        return status;
+    }
+
+    public String getDiagnosis() {
+        return diagnosis;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

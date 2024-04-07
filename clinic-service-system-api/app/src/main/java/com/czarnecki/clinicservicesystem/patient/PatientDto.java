@@ -5,33 +5,10 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import jakarta.validation.constraints.NotBlank;
 
 @JsonDeserialize(builder = PatientDto.Builder.class)
-public class PatientDto {
-    private final Integer id;
-    @NotBlank
-    private final String firstName;
-    @NotBlank
-    private final String lastName;
-
-    private PatientDto(Builder builder) {
-        this.id = builder.id;
-        this.firstName = builder.firstName;
-        this.lastName = builder.lastName;
-    }
+public record PatientDto(Integer id, @NotBlank String firstName, @NotBlank String lastName) {
 
     public static Builder builder() {
         return new Builder();
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
     }
 
     @JsonPOJOBuilder
@@ -47,7 +24,7 @@ public class PatientDto {
         }
 
         public PatientDto build() {
-            return new PatientDto(this);
+            return new PatientDto(id, firstName, lastName);
         }
 
         public Builder withId(final Integer id) {
