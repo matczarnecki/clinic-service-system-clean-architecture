@@ -24,8 +24,8 @@ class AuthenticationController {
     private final JwtUtility jwtUtility;
 
     AuthenticationController(AuthenticationManager authenticationManager,
-                             UserDetailsService customUserDetailsService,
-                             final UserFacade userService, JwtUtility jwtUtility) {
+        UserDetailsService customUserDetailsService,
+        final UserFacade userService, JwtUtility jwtUtility) {
         this.authenticationManager = authenticationManager;
         this.customUserDetailsService = customUserDetailsService;
         this.userFacade = userService;
@@ -33,13 +33,12 @@ class AuthenticationController {
     }
 
     @PostMapping
-    ResponseEntity<?> authenticateUser(@Valid @RequestBody AuthenticationRequest request) {
+    ResponseEntity<AuthenticationResponse> authenticateUser(@Valid @RequestBody AuthenticationRequest request) {
         try {
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
         } catch (BadCredentialsException e) {
             userFacade.handleFailedAuthentication(request.getUsername());
-            // TODO application exception throw in application layer
             throw new BadRequestException("Incorrect username or password", e);
         }
 
