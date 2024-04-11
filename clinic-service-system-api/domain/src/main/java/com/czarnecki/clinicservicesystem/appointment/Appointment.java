@@ -1,15 +1,15 @@
 package com.czarnecki.clinicservicesystem.appointment;
 
-import com.czarnecki.clinicservicesystem.patient.query.SimplePatientQueryDto;
-import com.czarnecki.clinicservicesystem.user.query.SimpleUserQueryDto;
+import com.czarnecki.clinicservicesystem.patient.dto.SimplePatient;
+import com.czarnecki.clinicservicesystem.user.dto.SimpleUser;
 
 import java.time.LocalDateTime;
 
 class Appointment {
     private Integer id;
     private LocalDateTime appointmentTime;
-    private SimpleUserQueryDto doctor;
-    private SimplePatientQueryDto patient;
+    private SimpleUser doctor;
+    private SimplePatient patient;
     private AppointmentStatus status;
     private String diagnosis;
     private String description;
@@ -31,19 +31,19 @@ class Appointment {
         this.appointmentTime = appointmentTime;
     }
 
-    SimpleUserQueryDto getDoctor() {
+    SimpleUser getDoctor() {
         return doctor;
     }
 
-    void setDoctor(SimpleUserQueryDto doctor) {
+    void setDoctor(SimpleUser doctor) {
         this.doctor = doctor;
     }
 
-    SimplePatientQueryDto getPatient() {
+    SimplePatient getPatient() {
         return patient;
     }
 
-    void setPatient(SimplePatientQueryDto patient) {
+    void setPatient(SimplePatient patient) {
         this.patient = patient;
     }
 

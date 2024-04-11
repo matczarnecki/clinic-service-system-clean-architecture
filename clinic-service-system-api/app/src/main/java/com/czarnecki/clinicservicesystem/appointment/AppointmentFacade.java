@@ -4,9 +4,9 @@ import com.czarnecki.clinicservicesystem.appointment.dto.AppointmentRequestDto;
 import com.czarnecki.clinicservicesystem.appointment.dto.MakeAppointmentRequest;
 import com.czarnecki.clinicservicesystem.exception.BadRequestException;
 import com.czarnecki.clinicservicesystem.patient.PatientQueryRepository;
-import com.czarnecki.clinicservicesystem.patient.query.SimplePatientQueryDto;
+import com.czarnecki.clinicservicesystem.patient.dto.SimplePatient;
 import com.czarnecki.clinicservicesystem.user.UserQueryRepository;
-import com.czarnecki.clinicservicesystem.user.query.SimpleUserQueryDto;
+import com.czarnecki.clinicservicesystem.user.dto.SimpleUser;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -42,7 +42,7 @@ public class AppointmentFacade {
                 () -> new BadRequestException("Patient with id: " + request.getPatientId() + " was not found"));
 
         var doctorQueryDto =
-            new SimpleUserQueryDto(
+            new SimpleUser(
                 doctorDto.getId(),
                 doctorDto.getFirstName(),
                 doctorDto.getLastName(),
@@ -50,7 +50,7 @@ public class AppointmentFacade {
             );
 
         var patientQueryDto =
-            new SimplePatientQueryDto(
+            new SimplePatient(
                 patientDto.id(),
                 patientDto.firstName(),
                 patientDto.lastName()

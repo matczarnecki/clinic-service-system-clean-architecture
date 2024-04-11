@@ -1,5 +1,7 @@
-package com.czarnecki.clinicservicesystem.user.query;
+package com.czarnecki.clinicservicesystem.user;
 
+
+import com.czarnecki.clinicservicesystem.user.dto.SimpleUser;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,7 +10,15 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class SimpleUserQueryDto {
+public class SqlSimpleUser {
+    public static SqlSimpleUser fromSimpleUser(SimpleUser source) {
+        var result = new SqlSimpleUser();
+        result.id = source.getId();
+        result.firstName = source.getFirstName();
+        result.lastName = source.getLastName();
+        result.emailAddress = source.getEmailAddress();
+        return result;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,18 +27,10 @@ public class SimpleUserQueryDto {
     private String lastName;
     private String emailAddress;
 
-    public SimpleUserQueryDto() {
+    public SimpleUser toSimpleUser() {
+        return new SimpleUser(id, firstName, lastName, emailAddress);
     }
 
-    public SimpleUserQueryDto(final Integer id,
-                              final String firstName,
-                              final String lastName,
-                              final String emailAddress) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.emailAddress = emailAddress;
-    }
 
     public Integer getId() {
         return id;

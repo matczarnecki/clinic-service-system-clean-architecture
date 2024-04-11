@@ -1,7 +1,8 @@
 package com.czarnecki.clinicservicesystem.appointment;
 
-import com.czarnecki.clinicservicesystem.patient.query.SimplePatientQueryDto;
-import com.czarnecki.clinicservicesystem.user.query.SimpleUserQueryDto;
+import com.czarnecki.clinicservicesystem.patient.SqlSimplePatient;
+import com.czarnecki.clinicservicesystem.user.SqlSimpleUser;
+import com.czarnecki.clinicservicesystem.user.dto.SimpleUser;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -20,8 +21,8 @@ class SqlAppointment {
         var result = new SqlAppointment();
         result.id = source.getId();
         result.appointmentTime = source.getAppointmentTime();
-        result.doctor = source.getDoctor();
-        result.patient = source.getPatient();
+        result.doctor = source.getDoctor() == null ? null : SqlSimpleUser.fromSimpleUser(source.getDoctor());
+        result.patient = source.getPatient() == null ? null : SqlSimplePatient.fromSimplePatient(source.getPatient());
         result.status = source.getStatus();
         result.diagnosis = source.getDiagnosis();
         result.description = source.getDescription();
@@ -34,10 +35,10 @@ class SqlAppointment {
     private LocalDateTime appointmentTime;
     @ManyToOne
     @JoinColumn(name = "doctor_id")
-    private SimpleUserQueryDto doctor;
+    private SqlSimpleUser doctor;
     @ManyToOne
     @JoinColumn(name = "patient_id")
-    private SimplePatientQueryDto patient;
+    private SqlSimplePatient patient;
     @Enumerated(EnumType.STRING)
     private AppointmentStatus status;
     private String diagnosis;
@@ -47,8 +48,8 @@ class SqlAppointment {
         var result = new Appointment();
         result.setId(id);
         result.setAppointmentTime(appointmentTime);
-        result.setDoctor(doctor);
-        result.setPatient(patient);
+        result.setDoctor(doctor == null ? null : doctor.toSimpleUser());
+        result.setPatient(patient == null ? null : patient.toSimplePatient());
         result.setStatus(status);
         result.setDiagnosis(diagnosis);
         result.setDescription(description);
@@ -63,11 +64,11 @@ class SqlAppointment {
         return appointmentTime;
     }
 
-    public SimpleUserQueryDto getDoctor() {
-        return doctor;
+    public SimpleUser getDoctor() {
+        return doctor.toSimpleUser();
     }
 
-    public SimplePatientQueryDto getPatient() {
+    public SqlSimplePatient getPatient() {
         return patient;
     }
 
