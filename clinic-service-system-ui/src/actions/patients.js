@@ -10,7 +10,7 @@ function getPatients() {
 function addPatient(data) {
   return axios({
     method: "POST",
-    url: '/v1/api/patients/',
+    url: '/v1/api/patients',
     data,
   })
 }
