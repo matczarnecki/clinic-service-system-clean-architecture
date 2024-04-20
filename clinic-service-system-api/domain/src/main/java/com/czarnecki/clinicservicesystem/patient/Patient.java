@@ -1,32 +1,24 @@
 package com.czarnecki.clinicservicesystem.patient;
 
-class Patient {
+import com.czarnecki.clinicservicesystem.Aggregate;
+
+class Patient implements Aggregate<Integer, PatientSnapshot> {
+    static Patient from(final PatientSnapshot patientSnapshot) {
+        return new Patient(patientSnapshot.id(), patientSnapshot.firstName(), patientSnapshot.lastName());
+    }
+
     private Integer id;
     private String firstName;
     private String lastName;
 
-
-    Integer getId() {
-        return id;
-    }
-
-    void setId(Integer id) {
+    private Patient(Integer id, String firstName, String lastName) {
         this.id = id;
-    }
-
-    String getFirstName() {
-        return firstName;
-    }
-
-    void setFirstName(String firstName) {
         this.firstName = firstName;
-    }
-
-    String getLastName() {
-        return lastName;
-    }
-
-    void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    @Override
+    public PatientSnapshot getSnapshot() {
+        return new PatientSnapshot(id, firstName, lastName);
     }
 }

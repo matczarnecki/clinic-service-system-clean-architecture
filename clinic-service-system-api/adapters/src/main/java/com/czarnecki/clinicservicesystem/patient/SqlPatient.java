@@ -10,12 +10,8 @@ import jakarta.persistence.Table;
 @Table(name = "patients")
 class SqlPatient {
 
-    static SqlPatient fromPatient(Patient source) {
-        var result = new SqlPatient();
-        result.id = source.getId();
-        result.firstName = source.getFirstName();
-        result.lastName = source.getLastName();
-        return result;
+    static SqlPatient fromSnapshot(final PatientSnapshot snapshot) {
+        return new SqlPatient(snapshot.id(), snapshot.firstName(), snapshot.lastName());
     }
 
     @Id
@@ -24,12 +20,17 @@ class SqlPatient {
     private String firstName;
     private String lastName;
 
-    Patient toPatient() {
-        var result = new Patient();
-        result.setId(id);
-        result.setFirstName(firstName);
-        result.setLastName(lastName);
-        return result;
+    public SqlPatient(Integer id, String firstName, String lastName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public SqlPatient() {
+    }
+
+    PatientSnapshot toSnapshot() {
+        return new PatientSnapshot(id, firstName, lastName);
     }
 
 }

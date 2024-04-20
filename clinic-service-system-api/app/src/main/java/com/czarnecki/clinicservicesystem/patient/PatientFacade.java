@@ -5,15 +5,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class PatientFacade {
     private final PatientRepository patientRepository;
+    private final PatientFactory patientFactory;
 
-    PatientFacade(final PatientRepository patientRepository) {
+    PatientFacade(
+        final PatientRepository patientRepository,
+        final PatientFactory patientFactory) {
         this.patientRepository = patientRepository;
+        this.patientFactory = patientFactory;
     }
 
     public void addPatient(PatientDto request) {
-        var patient = new Patient();
-        patient.setFirstName(request.firstName());
-        patient.setLastName(request.lastName());
+        var patient = patientFactory.from(request);
         patientRepository.save(patient);
     }
 }

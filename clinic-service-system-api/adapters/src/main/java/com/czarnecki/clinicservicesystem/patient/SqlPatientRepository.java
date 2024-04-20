@@ -20,11 +20,14 @@ class PatientRepositoryImpl implements PatientRepository {
     @Override
     public Optional<Patient> findById(Integer id) {
         return repository.findById(id)
-            .map(SqlPatient::toPatient);
+            .map(SqlPatient::toSnapshot)
+            .map(Patient::from);
     }
 
     @Override
     public Patient save(Patient entity) {
-        return repository.save(SqlPatient.fromPatient(entity)).toPatient();
+        return Patient.from(
+            repository.save(SqlPatient.fromSnapshot(entity.getSnapshot()))
+                .toSnapshot());
     }
 }
