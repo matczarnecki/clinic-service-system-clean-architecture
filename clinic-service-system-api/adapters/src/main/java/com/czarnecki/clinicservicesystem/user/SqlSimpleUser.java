@@ -1,7 +1,6 @@
 package com.czarnecki.clinicservicesystem.user;
 
-
-import com.czarnecki.clinicservicesystem.user.dto.SimpleUser;
+import com.czarnecki.clinicservicesystem.user.dto.SimpleUserSnapshot;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,13 +10,8 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "users")
 public class SqlSimpleUser {
-    public static SqlSimpleUser fromSimpleUser(SimpleUser source) {
-        var result = new SqlSimpleUser();
-        result.id = source.getId();
-        result.firstName = source.getFirstName();
-        result.lastName = source.getLastName();
-        result.emailAddress = source.getEmailAddress();
-        return result;
+    public static SqlSimpleUser fromSnapshot(SimpleUserSnapshot snapshot) {
+        return new SqlSimpleUser(snapshot.id(), snapshot.firstName(), snapshot.lastName(), snapshot.emailAddress());
     }
 
     @Id
@@ -27,24 +21,17 @@ public class SqlSimpleUser {
     private String lastName;
     private String emailAddress;
 
-    public SimpleUser toSimpleUser() {
-        return new SimpleUser(id, firstName, lastName, emailAddress);
+    public SqlSimpleUser(Integer id, String firstName, String lastName, String emailAddress) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.emailAddress = emailAddress;
     }
 
-
-    public Integer getId() {
-        return id;
+    public SqlSimpleUser() {
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getEmailAddress() {
-        return emailAddress;
+    public SimpleUserSnapshot getSnapshot() {
+        return new SimpleUserSnapshot(id, firstName, lastName, emailAddress);
     }
 }

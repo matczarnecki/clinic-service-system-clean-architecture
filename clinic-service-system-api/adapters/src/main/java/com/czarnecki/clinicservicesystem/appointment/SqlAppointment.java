@@ -22,9 +22,12 @@ class SqlAppointment {
         var result = new SqlAppointment();
         result.id = source.getId();
         result.appointmentTime = source.getAppointmentTime();
-        result.doctor = source.getDoctor() == null ? null : SqlSimpleUser.fromSimpleUser(source.getDoctor());
-        result.patient = source.getPatient() == null ? null : SqlSimplePatient
-            .fromSnapshot(source.getPatient().getSnapshot());
+        result.doctor = source.getDoctor() == null
+            ? null
+            : SqlSimpleUser.fromSnapshot(source.getDoctor().getSnapshot());
+        result.patient = source.getPatient() == null
+            ? null
+            : SqlSimplePatient.fromSnapshot(source.getPatient().getSnapshot());
         result.status = source.getStatus();
         result.diagnosis = source.getDiagnosis();
         result.description = source.getDescription();
@@ -50,8 +53,8 @@ class SqlAppointment {
         var result = new Appointment();
         result.setId(id);
         result.setAppointmentTime(appointmentTime);
-        result.setDoctor(doctor == null ? null : doctor.toSimpleUser());
-        result.setPatient(patient == null ? null : SimplePatient.from(patient.toSnapshot()));
+        result.setDoctor(doctor == null ? null : SimpleUser.from(doctor.getSnapshot()));
+        result.setPatient(patient == null ? null : SimplePatient.from(patient.getSnapshot()));
         result.setStatus(status);
         result.setDiagnosis(diagnosis);
         result.setDescription(description);
@@ -66,8 +69,8 @@ class SqlAppointment {
         return appointmentTime;
     }
 
-    public SimpleUser getDoctor() {
-        return doctor.toSimpleUser();
+    public SqlSimpleUser getDoctor() {
+        return doctor;
     }
 
     public SqlSimplePatient getPatient() {

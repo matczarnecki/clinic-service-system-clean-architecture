@@ -30,7 +30,7 @@ class SqlPatient {
     public SqlPatient() {
     }
 
-    PatientSnapshot toSnapshot() {
+    PatientSnapshot getSnapshot() {
         return new PatientSnapshot(id, firstName, lastName);
     }
 

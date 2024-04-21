@@ -20,7 +20,7 @@ class PatientRepositoryImpl implements PatientRepository {
     @Override
     public Optional<Patient> findById(Integer id) {
         return repository.findById(id)
-            .map(SqlPatient::toSnapshot)
+            .map(SqlPatient::getSnapshot)
             .map(Patient::from);
     }
 
@@ -28,6 +28,6 @@ class PatientRepositoryImpl implements PatientRepository {
     public Patient save(Patient entity) {
         return Patient.from(
             repository.save(SqlPatient.fromSnapshot(entity.getSnapshot()))
-                .toSnapshot());
+                .getSnapshot());
     }
 }

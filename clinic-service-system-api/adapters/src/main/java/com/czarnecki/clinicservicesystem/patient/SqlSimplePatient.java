@@ -32,20 +32,8 @@ public class SqlSimplePatient {
     public SqlSimplePatient() {
     }
 
-    public SimplePatientSnapshot toSnapshot() {
+    public SimplePatientSnapshot getSnapshot() {
         return new SimplePatientSnapshot(id, firstName, lastName);
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
     }
 
 }
