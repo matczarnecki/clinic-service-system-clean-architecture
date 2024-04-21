@@ -1,6 +1,15 @@
 package com.czarnecki.clinicservicesystem.user;
 
-public class User {
+import com.czarnecki.clinicservicesystem.Aggregate;
+import com.czarnecki.clinicservicesystem.user.vo.UserSnapshot;
+
+public class User implements Aggregate<Integer, UserSnapshot> {
+
+    static User from(final UserSnapshot userSnapshot) {
+        return new User(userSnapshot.id(), userSnapshot.username(), userSnapshot.password(),
+            userSnapshot.firstName(), userSnapshot.lastName(), userSnapshot.emailAddress(), userSnapshot.isActive(),
+            userSnapshot.isBlocked(), userSnapshot.numberOfFailedLogins(), Role.from(userSnapshot.role()));
+    }
 
     private Integer id;
     private String username;
@@ -11,8 +20,30 @@ public class User {
     private boolean isActive;
     private boolean isBlocked;
     private Integer numberOfFailedLogins;
-
     private Role role;
+
+    private User(Integer id, String username, String password, String firstName, String lastName, String emailAddress,
+        boolean isActive, boolean isBlocked, Integer numberOfFailedLogins, Role role) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.emailAddress = emailAddress;
+        this.isActive = isActive;
+        this.isBlocked = isBlocked;
+        this.numberOfFailedLogins = numberOfFailedLogins;
+        this.role = role;
+    }
+
+    public User() {
+    }
+
+    @Override
+    public UserSnapshot getSnapshot() {
+        return new UserSnapshot(id, username, password, firstName, lastName, emailAddress,
+            isActive, isBlocked, numberOfFailedLogins, role.getSnapshot());
+    }
 
     public Integer getId() {
         return id;

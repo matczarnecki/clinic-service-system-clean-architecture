@@ -10,6 +10,9 @@ import static org.mockito.Mockito.when;
 
 import com.czarnecki.clinicservicesystem.exception.BadRequestException;
 import com.czarnecki.clinicservicesystem.user.dto.RegisterUserRequest;
+import com.czarnecki.clinicservicesystem.user.vo.RoleSnapshot;
+import com.czarnecki.clinicservicesystem.user.vo.UserSnapshot;
+import java.util.HashSet;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -149,10 +152,11 @@ class UserFacadeTest {
     }
 
     private User getUserMockEntityWithId(int userId) {
-        var user = new User();
-        user.setId(userId);
-        user.setRole(new Role());
-        return user;
+        var userSnapshot = new UserSnapshot(0, "username", "password",
+            "firstName", "lastName", "email@address.com",
+            true, false, 0,
+            new RoleSnapshot("CODE", "NAME", new HashSet<>()));
+        return User.from(userSnapshot);
     }
 
 }

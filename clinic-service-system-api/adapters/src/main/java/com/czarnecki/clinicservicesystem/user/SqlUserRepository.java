@@ -24,13 +24,15 @@ class UserRepositoryImpl implements UserRepository {
     @Override
     public Optional<User> findById(Integer id) {
         return repository.findById(id)
-            .map(SqlUser::toUser);
+            .map(SqlUser::toSnapshot)
+            .map(User::from);
     }
 
     @Override
     public Optional<User> findByUsername(String username) {
         return repository.findByUsername(username)
-            .map(SqlUser::toUser);
+            .map(SqlUser::toSnapshot)
+            .map(User::from);
     }
 
 
@@ -46,6 +48,8 @@ class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User save(User entity) {
-        return repository.save(SqlUser.fromUser(entity)).toUser();
+        return User.from(
+            repository.save(SqlUser.fromSnapshot(entity.getSnapshot()))
+                .toSnapshot());
     }
 }

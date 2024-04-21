@@ -21,7 +21,8 @@ class RoleRepositoryImpl implements RoleRepository {
     @Override
     public Optional<Role> findByCode(String code) {
         return repository.findByCode(code)
-            .map(SqlRole::toRole);
+            .map(SqlRole::toSnapshot)
+            .map(Role::from);
     }
 }
 

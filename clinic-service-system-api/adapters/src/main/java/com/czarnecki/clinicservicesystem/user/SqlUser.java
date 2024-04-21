@@ -1,5 +1,6 @@
 package com.czarnecki.clinicservicesystem.user;
 
+import com.czarnecki.clinicservicesystem.user.vo.UserSnapshot;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -12,19 +13,10 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "users")
 class SqlUser {
-    static SqlUser fromUser(User source) {
-        var result = new SqlUser();
-        result.id = source.getId();
-        result.username = source.getUsername();
-        result.password = source.getPassword();
-        result.firstName = source.getFirstName();
-        result.lastName = source.getLastName();
-        result.emailAddress = source.getEmailAddress();
-        result.isActive = source.isActive();
-        result.isBlocked = source.isBlocked();
-        result.numberOfFailedLogins = source.getNumberOfFailedLogins();
-        result.role = SqlRole.fromRole(source.getRole());
-        return result;
+    static SqlUser fromSnapshot(UserSnapshot snapshot) {
+        return new SqlUser(snapshot.id(), snapshot.username(), snapshot.password(), snapshot.firstName(),
+            snapshot.lastName(), snapshot.emailAddress(), snapshot.isActive(), snapshot.isBlocked(),
+            snapshot.numberOfFailedLogins(), SqlRole.fromSnapshot(snapshot.role()));
     }
 
     @Id
@@ -42,19 +34,27 @@ class SqlUser {
     @JoinColumn(name = "role", referencedColumnName = "code")
     private SqlRole role;
 
-    User toUser() {
-        var result = new User();
-        result.setId(id);
-        result.setUsername(username);
-        result.setPassword(password);
-        result.setFirstName(firstName);
-        result.setLastName(lastName);
-        result.setEmailAddress(emailAddress);
-        result.setActive(isActive);
-        result.setBlocked(isBlocked);
-        result.setNumberOfFailedLogins(numberOfFailedLogins);
-        result.setRole(role.toRole());
-        return result;
+    public SqlUser(Integer id, String username, String password, String firstName, String lastName, String emailAddress,
+        boolean isActive, boolean isBlocked, Integer numberOfFailedLogins, SqlRole role) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.emailAddress = emailAddress;
+        this.isActive = isActive;
+        this.isBlocked = isBlocked;
+        this.numberOfFailedLogins = numberOfFailedLogins;
+        this.role = role;
+    }
+
+    public SqlUser() {
+    }
+
+    UserSnapshot toSnapshot() {
+        return new UserSnapshot(id, username, password, firstName, lastName, emailAddress, isActive, isBlocked,
+            numberOfFailedLogins,
+            role.toSnapshot());
     }
 
 }

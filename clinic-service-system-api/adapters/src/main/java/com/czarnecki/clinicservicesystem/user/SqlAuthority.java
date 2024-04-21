@@ -1,5 +1,6 @@
 package com.czarnecki.clinicservicesystem.user;
 
+import com.czarnecki.clinicservicesystem.user.vo.AuthoritySnapshot;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -8,12 +9,8 @@ import jakarta.persistence.Table;
 @Table(name = "authorities")
 class SqlAuthority {
 
-    static SqlAuthority fromAuthority(Authority source) {
-        var result = new SqlAuthority();
-        result.code = source.getCode();
-        result.name = source.getName();
-        result.description = source.getDescription();
-        return result;
+    static SqlAuthority fromSnapshot(final AuthoritySnapshot snapshot) {
+        return new SqlAuthority(snapshot.code(), snapshot.name(), snapshot.description());
     }
 
     @Id
@@ -23,12 +20,17 @@ class SqlAuthority {
 
     private String description;
 
-    Authority toAuthority() {
-        var result = new Authority();
-        result.setCode(code);
-        result.setName(name);
-        result.setDescription(description);
-        return result;
+    public SqlAuthority(String code, String name, String description) {
+        this.code = code;
+        this.name = name;
+        this.description = description;
+    }
+
+    public SqlAuthority() {
+    }
+
+    AuthoritySnapshot toSnapshot() {
+        return new AuthoritySnapshot(code, name, description);
     }
 
 }
