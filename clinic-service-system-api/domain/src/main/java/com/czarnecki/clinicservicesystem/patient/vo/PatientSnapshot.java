@@ -1,4 +1,4 @@
-package com.czarnecki.clinicservicesystem.patient;
+package com.czarnecki.clinicservicesystem.patient.vo;
 
 import com.czarnecki.clinicservicesystem.vo.EntitySnapshot;
 

@@ -1,5 +1,6 @@
 package com.czarnecki.clinicservicesystem.patient;
 
+import com.czarnecki.clinicservicesystem.patient.vo.PatientSnapshot;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

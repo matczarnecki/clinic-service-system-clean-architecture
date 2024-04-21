@@ -1,5 +1,6 @@
 package com.czarnecki.clinicservicesystem.patient;
 
+import com.czarnecki.clinicservicesystem.patient.vo.PatientSnapshot;
 import org.springframework.stereotype.Service;
 
 @Service
