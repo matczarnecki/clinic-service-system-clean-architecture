@@ -1,9 +1,8 @@
 package com.czarnecki.clinicservicesystem.appointment;
 
+import com.czarnecki.clinicservicesystem.appointment.vo.AppointmentSnapshot;
 import com.czarnecki.clinicservicesystem.patient.SqlSimplePatient;
-import com.czarnecki.clinicservicesystem.patient.dto.SimplePatient;
 import com.czarnecki.clinicservicesystem.user.SqlSimpleUser;
-import com.czarnecki.clinicservicesystem.user.dto.SimpleUser;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -18,20 +17,11 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "appointments")
 class SqlAppointment {
-    static SqlAppointment fromAppointment(Appointment source) {
-        var result = new SqlAppointment();
-        result.id = source.getId();
-        result.appointmentTime = source.getAppointmentTime();
-        result.doctor = source.getDoctor() == null
-            ? null
-            : SqlSimpleUser.fromSnapshot(source.getDoctor().getSnapshot());
-        result.patient = source.getPatient() == null
-            ? null
-            : SqlSimplePatient.fromSnapshot(source.getPatient().getSnapshot());
-        result.status = source.getStatus();
-        result.diagnosis = source.getDiagnosis();
-        result.description = source.getDescription();
-        return result;
+    static SqlAppointment fromSnapshot(com.czarnecki.clinicservicesystem.appointment.vo.AppointmentSnapshot snapshot) {
+        return new SqlAppointment(snapshot.id(), snapshot.appointmentTime(),
+            SqlSimpleUser.fromSnapshot(snapshot.doctor()),
+            SqlSimplePatient.fromSnapshot(snapshot.patient()),
+            snapshot.status(), snapshot.diagnosis(), snapshot.description());
     }
 
     @Id
@@ -49,16 +39,23 @@ class SqlAppointment {
     private String diagnosis;
     private String description;
 
-    Appointment toAppointment() {
-        var result = new Appointment();
-        result.setId(id);
-        result.setAppointmentTime(appointmentTime);
-        result.setDoctor(doctor == null ? null : SimpleUser.from(doctor.getSnapshot()));
-        result.setPatient(patient == null ? null : SimplePatient.from(patient.getSnapshot()));
-        result.setStatus(status);
-        result.setDiagnosis(diagnosis);
-        result.setDescription(description);
-        return result;
+    public SqlAppointment(Integer id, LocalDateTime appointmentTime, SqlSimpleUser doctor, SqlSimplePatient patient,
+        AppointmentStatus status, String diagnosis, String description) {
+        this.id = id;
+        this.appointmentTime = appointmentTime;
+        this.doctor = doctor;
+        this.patient = patient;
+        this.status = status;
+        this.diagnosis = diagnosis;
+        this.description = description;
+    }
+
+    public SqlAppointment() {
+    }
+
+    AppointmentSnapshot getSnapshot() {
+        return new AppointmentSnapshot(id, appointmentTime, doctor.getSnapshot(), patient.getSnapshot(), status,
+            diagnosis, description);
     }
 
     public Integer getId() {

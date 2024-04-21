@@ -18,12 +18,16 @@ class AppointmentRepositoryImpl implements AppointmentRepository {
 
     @Override
     public Optional<Appointment> findById(Integer id) {
-        return repository.findById(id).map(SqlAppointment::toAppointment);
+        return repository.findById(id)
+            .map(SqlAppointment::getSnapshot)
+            .map(Appointment::from);
     }
 
     @Override
     public Appointment save(Appointment entity) {
-        return repository.save(SqlAppointment.fromAppointment(entity)).toAppointment();
+        return Appointment.from(
+            repository.save(SqlAppointment.fromSnapshot(entity.getSnapshot()))
+                .getSnapshot());
     }
 }
 

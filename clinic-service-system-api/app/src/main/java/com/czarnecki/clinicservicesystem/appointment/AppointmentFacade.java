@@ -54,7 +54,7 @@ public class AppointmentFacade {
             .from(new SimplePatientSnapshot(patientDto.id(), patientDto.firstName(), patientDto.lastName()));
 
         var appointment = appointmentFactory
-            .from(request, simpleUserDoctor, simplePatient, AppointmentStatus.SCHEDULED);
+            .from(request, simpleUserDoctor, simplePatient);
         appointmentRepository.save(appointment);
     }
 

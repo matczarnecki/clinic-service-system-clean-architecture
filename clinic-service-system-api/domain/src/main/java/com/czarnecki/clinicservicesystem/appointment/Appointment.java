@@ -1,11 +1,23 @@
 package com.czarnecki.clinicservicesystem.appointment;
 
+import com.czarnecki.clinicservicesystem.Aggregate;
+import com.czarnecki.clinicservicesystem.appointment.vo.AppointmentSnapshot;
 import com.czarnecki.clinicservicesystem.patient.dto.SimplePatient;
 import com.czarnecki.clinicservicesystem.user.dto.SimpleUser;
-
 import java.time.LocalDateTime;
 
-class Appointment {
+class Appointment
+    implements Aggregate<Integer, AppointmentSnapshot> {
+
+    static Appointment from(final AppointmentSnapshot snapshot) {
+        return new Appointment(snapshot.id(),
+            snapshot.appointmentTime(),
+            SimpleUser.from(snapshot.doctor()),
+            SimplePatient.from(snapshot.patient()),
+            snapshot.status(),
+            snapshot.diagnosis(), snapshot.description());
+    }
+
     private Integer id;
     private LocalDateTime appointmentTime;
     private SimpleUser doctor;
@@ -14,60 +26,33 @@ class Appointment {
     private String diagnosis;
     private String description;
 
-
-    Integer getId() {
-        return id;
-    }
-
-    void setId(Integer id) {
+    public Appointment(Integer id, LocalDateTime appointmentTime, SimpleUser doctor, SimplePatient patient,
+        AppointmentStatus status, String diagnosis, String description) {
         this.id = id;
-    }
-
-    LocalDateTime getAppointmentTime() {
-        return appointmentTime;
-    }
-
-    void setAppointmentTime(LocalDateTime appointmentTime) {
         this.appointmentTime = appointmentTime;
-    }
-
-    SimpleUser getDoctor() {
-        return doctor;
-    }
-
-    void setDoctor(SimpleUser doctor) {
         this.doctor = doctor;
-    }
-
-    SimplePatient getPatient() {
-        return patient;
-    }
-
-    void setPatient(SimplePatient patient) {
         this.patient = patient;
+        this.status = status;
+        this.diagnosis = diagnosis;
+        this.description = description;
     }
 
-    AppointmentStatus getStatus() {
-        return status;
-    }
-
-    void setStatus(AppointmentStatus status) {
+    public void setStatus(AppointmentStatus status) {
         this.status = status;
     }
 
-    String getDiagnosis() {
-        return diagnosis;
-    }
-
-    void setDiagnosis(String diagnosis) {
+    public void setDiagnosis(String diagnosis) {
         this.diagnosis = diagnosis;
     }
 
-    String getDescription() {
-        return description;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    void setDescription(String description) {
-        this.description = description;
+    @Override
+    public AppointmentSnapshot getSnapshot() {
+        return new AppointmentSnapshot(id, appointmentTime,
+            doctor.getSnapshot(), patient.getSnapshot(),
+            status, diagnosis, description);
     }
 }
