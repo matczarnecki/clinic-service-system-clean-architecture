@@ -1,25 +1,24 @@
 package com.czarnecki.clinicservicesystem.patient.dto;
 
 public class SimplePatient {
-    private Integer id;
-    private String firstName;
-    private String lastName;
 
-    public SimplePatient(final Integer id, final String firstName, final String lastName) {
+    public static SimplePatient from(final SimplePatientSnapshot snapshot) {
+        return new SimplePatient(snapshot.id(), snapshot.firstName(), snapshot.lastName());
+    }
+
+    private final Integer id;
+    private final String firstName;
+    private final String lastName;
+
+    private SimplePatient(final Integer id,
+        final String firstName,
+        final String lastName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
+    public SimplePatientSnapshot getSnapshot() {
+        return new SimplePatientSnapshot(id, firstName, lastName);
     }
 }

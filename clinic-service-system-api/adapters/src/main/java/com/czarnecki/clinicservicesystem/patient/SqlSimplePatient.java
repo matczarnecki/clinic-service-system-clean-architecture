@@ -1,6 +1,6 @@
 package com.czarnecki.clinicservicesystem.patient;
 
-import com.czarnecki.clinicservicesystem.patient.dto.SimplePatient;
+import com.czarnecki.clinicservicesystem.patient.dto.SimplePatientSnapshot;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,12 +11,8 @@ import jakarta.persistence.Table;
 @Table(name = "patients")
 public class SqlSimplePatient {
 
-    public static SqlSimplePatient fromSimplePatient(SimplePatient simplePatient) {
-        var result = new SqlSimplePatient();
-        result.id = simplePatient.getId();
-        result.firstName = simplePatient.getFirstName();
-        result.lastName = simplePatient.getLastName();
-        return result;
+    public static SqlSimplePatient fromSnapshot(final SimplePatientSnapshot snapshot) {
+        return new SqlSimplePatient(snapshot.id(), snapshot.firstName(), snapshot.lastName());
     }
 
     @Id
@@ -24,9 +20,6 @@ public class SqlSimplePatient {
     private Integer id;
     private String firstName;
     private String lastName;
-
-    public SqlSimplePatient() {
-    }
 
     public SqlSimplePatient(final Integer id,
         final String firstName,
@@ -36,8 +29,11 @@ public class SqlSimplePatient {
         this.lastName = lastName;
     }
 
-    public SimplePatient toSimplePatient() {
-        return new SimplePatient(id, firstName, lastName);
+    public SqlSimplePatient() {
+    }
+
+    public SimplePatientSnapshot toSnapshot() {
+        return new SimplePatientSnapshot(id, firstName, lastName);
     }
 
     public Integer getId() {

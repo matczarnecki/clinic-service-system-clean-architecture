@@ -5,6 +5,7 @@ import com.czarnecki.clinicservicesystem.appointment.dto.MakeAppointmentRequest;
 import com.czarnecki.clinicservicesystem.exception.BadRequestException;
 import com.czarnecki.clinicservicesystem.patient.PatientQueryRepository;
 import com.czarnecki.clinicservicesystem.patient.dto.SimplePatient;
+import com.czarnecki.clinicservicesystem.patient.dto.SimplePatientSnapshot;
 import com.czarnecki.clinicservicesystem.user.UserQueryRepository;
 import com.czarnecki.clinicservicesystem.user.dto.SimpleUser;
 import org.springframework.stereotype.Service;
@@ -41,7 +42,7 @@ public class AppointmentFacade {
             .orElseThrow(
                 () -> new BadRequestException("Patient with id: " + request.getPatientId() + " was not found"));
 
-        var doctorQueryDto =
+        var simpleUserDoctor =
             new SimpleUser(
                 doctorDto.getId(),
                 doctorDto.getFirstName(),
@@ -49,15 +50,11 @@ public class AppointmentFacade {
                 doctorDto.getEmailAddress()
             );
 
-        var patientQueryDto =
-            new SimplePatient(
-                patientDto.id(),
-                patientDto.firstName(),
-                patientDto.lastName()
-            );
+        var simplePatient = SimplePatient
+            .from(new SimplePatientSnapshot(patientDto.id(), patientDto.firstName(), patientDto.lastName()));
 
         var appointment = appointmentFactory
-            .from(request, doctorQueryDto, patientQueryDto, AppointmentStatus.SCHEDULED);
+            .from(request, simpleUserDoctor, simplePatient, AppointmentStatus.SCHEDULED);
         appointmentRepository.save(appointment);
     }
 

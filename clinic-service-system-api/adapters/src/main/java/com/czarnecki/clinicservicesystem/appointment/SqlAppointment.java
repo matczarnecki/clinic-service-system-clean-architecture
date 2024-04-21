@@ -1,6 +1,7 @@
 package com.czarnecki.clinicservicesystem.appointment;
 
 import com.czarnecki.clinicservicesystem.patient.SqlSimplePatient;
+import com.czarnecki.clinicservicesystem.patient.dto.SimplePatient;
 import com.czarnecki.clinicservicesystem.user.SqlSimpleUser;
 import com.czarnecki.clinicservicesystem.user.dto.SimpleUser;
 import jakarta.persistence.Entity;
@@ -22,7 +23,8 @@ class SqlAppointment {
         result.id = source.getId();
         result.appointmentTime = source.getAppointmentTime();
         result.doctor = source.getDoctor() == null ? null : SqlSimpleUser.fromSimpleUser(source.getDoctor());
-        result.patient = source.getPatient() == null ? null : SqlSimplePatient.fromSimplePatient(source.getPatient());
+        result.patient = source.getPatient() == null ? null : SqlSimplePatient
+            .fromSnapshot(source.getPatient().getSnapshot());
         result.status = source.getStatus();
         result.diagnosis = source.getDiagnosis();
         result.description = source.getDescription();
@@ -49,7 +51,7 @@ class SqlAppointment {
         result.setId(id);
         result.setAppointmentTime(appointmentTime);
         result.setDoctor(doctor == null ? null : doctor.toSimpleUser());
-        result.setPatient(patient == null ? null : patient.toSimplePatient());
+        result.setPatient(patient == null ? null : SimplePatient.from(patient.toSnapshot()));
         result.setStatus(status);
         result.setDiagnosis(diagnosis);
         result.setDescription(description);
