@@ -14,7 +14,7 @@ public class PatientFacade {
         this.patientFactory = patientFactory;
     }
 
-    public void addPatient(PatientDto request) {
+    public void save(PatientDto request) {
         var patient = patientFactory.from(request);
         patientRepository.save(patient);
     }

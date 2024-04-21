@@ -33,8 +33,8 @@ class PatientController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('CAN_ADD_PATIENTS')")
-    ResponseEntity<String> addPatient(@RequestBody @Valid PatientDto request) {
-        patientFacade.addPatient(request);
+    ResponseEntity<String> create(@RequestBody @Valid PatientDto toCreate) {
+        patientFacade.save(toCreate);
         return ResponseEntity.ok("Patient has been created");
     }
 }
