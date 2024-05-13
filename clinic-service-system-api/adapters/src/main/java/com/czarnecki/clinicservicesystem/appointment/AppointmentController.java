@@ -2,7 +2,7 @@ package com.czarnecki.clinicservicesystem.appointment;
 
 import com.czarnecki.clinicservicesystem.appointment.dto.AppointmentDto;
 import com.czarnecki.clinicservicesystem.appointment.dto.AppointmentRequestDto;
-import com.czarnecki.clinicservicesystem.appointment.dto.MakeAppointmentRequest;
+import com.czarnecki.clinicservicesystem.appointment.dto.ConductAppointmentRequest;
 import com.czarnecki.clinicservicesystem.auth.CustomUserDetails;
 import com.czarnecki.clinicservicesystem.exception.BadRequestException;
 import jakarta.validation.Valid;
@@ -88,8 +88,8 @@ class AppointmentController {
     @PatchMapping("/{id}")
     @PreAuthorize("hasAuthority('CAN_MAKE_APPOINTMENTS')")
     ResponseEntity<String> makeAppointment(@PathVariable Integer id,
-        @RequestBody @Valid MakeAppointmentRequest request) {
-        appointmentFacade.makeAppointment(id, request);
+        @RequestBody @Valid ConductAppointmentRequest request) {
+        appointmentFacade.conductAppointment(id, request);
         return ResponseEntity.ok("The appointment has been finished!");
     }
 }

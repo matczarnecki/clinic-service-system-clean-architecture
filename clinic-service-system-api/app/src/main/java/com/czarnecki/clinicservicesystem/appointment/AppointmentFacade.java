@@ -1,7 +1,7 @@
 package com.czarnecki.clinicservicesystem.appointment;
 
 import com.czarnecki.clinicservicesystem.appointment.dto.AppointmentRequestDto;
-import com.czarnecki.clinicservicesystem.appointment.dto.MakeAppointmentRequest;
+import com.czarnecki.clinicservicesystem.appointment.dto.ConductAppointmentRequest;
 import com.czarnecki.clinicservicesystem.exception.BadRequestException;
 import com.czarnecki.clinicservicesystem.patient.PatientQueryRepository;
 import com.czarnecki.clinicservicesystem.patient.dto.SimplePatient;
@@ -30,7 +30,7 @@ public class AppointmentFacade {
     void cancelAppointment(Integer id) {
         var appointment = appointmentRepository.findById(id)
             .orElseThrow(() -> new BadRequestException("Appointment with id: " + id + " was not found"));
-        appointment.setStatus(AppointmentStatus.CANCELLED);
+        appointment.cancel();
         appointmentRepository.save(appointment);
     }
 
@@ -58,13 +58,10 @@ public class AppointmentFacade {
         appointmentRepository.save(appointment);
     }
 
-    void makeAppointment(Integer id, MakeAppointmentRequest request) {
+    void conductAppointment(Integer id, ConductAppointmentRequest request) {
         var appointment = appointmentRepository.findById(id)
             .orElseThrow(() -> new BadRequestException("Appointment with id: " + id + " was not found"));
-
-        appointment.setDescription(request.getDescription());
-        appointment.setDiagnosis(request.getDiagnosis());
-        appointment.setStatus(AppointmentStatus.DONE);
+        appointment.conduct(request.getDescription(), request.getDiagnosis());
         appointmentRepository.save(appointment);
     }
 }

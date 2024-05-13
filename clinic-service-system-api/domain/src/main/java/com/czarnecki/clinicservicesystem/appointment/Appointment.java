@@ -26,7 +26,7 @@ class Appointment
     private String diagnosis;
     private String description;
 
-    public Appointment(Integer id, LocalDateTime appointmentTime, SimpleUser doctor, SimplePatient patient,
+    Appointment(Integer id, LocalDateTime appointmentTime, SimpleUser doctor, SimplePatient patient,
         AppointmentStatus status, String diagnosis, String description) {
         this.id = id;
         this.appointmentTime = appointmentTime;
@@ -37,16 +37,14 @@ class Appointment
         this.description = description;
     }
 
-    public void setStatus(AppointmentStatus status) {
-        this.status = status;
+    void cancel() {
+        this.status = AppointmentStatus.CANCELLED;
     }
 
-    public void setDiagnosis(String diagnosis) {
-        this.diagnosis = diagnosis;
-    }
-
-    public void setDescription(String description) {
+    void conduct(String description, String diagnosis) {
         this.description = description;
+        this.diagnosis = diagnosis;
+        this.status = AppointmentStatus.DONE;
     }
 
     @Override

@@ -3,7 +3,7 @@ package com.czarnecki.clinicservicesystem.appointment.dto;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 
-public class MakeAppointmentRequest {
+public class ConductAppointmentRequest {
 
     @NotBlank
     @Length(max = 255)
