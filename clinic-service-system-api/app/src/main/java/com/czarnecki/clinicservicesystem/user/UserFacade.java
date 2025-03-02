@@ -4,6 +4,7 @@ import com.czarnecki.clinicservicesystem.exception.BadRequestException;
 import com.czarnecki.clinicservicesystem.user.dto.EditUserRequest;
 import com.czarnecki.clinicservicesystem.user.dto.RegisterUserRequest;
 import com.czarnecki.clinicservicesystem.user.dto.UserDto;
+import com.czarnecki.clinicservicesystem.user.vo.UserSnapshot;
 import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -62,9 +63,9 @@ public class UserFacade {
             );
     }
 
-    // TODO read operation to be removed from the facade
-    public Optional<User> findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public Optional<UserSnapshot> findByUsername(String username) {
+        return userRepository.findByUsername(username)
+            .map(User::getSnapshot);
     }
 
     public void editUser(Integer id, EditUserRequest request) {

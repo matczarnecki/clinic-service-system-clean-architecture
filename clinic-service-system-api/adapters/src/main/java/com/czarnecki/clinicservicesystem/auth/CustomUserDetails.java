@@ -1,6 +1,6 @@
 package com.czarnecki.clinicservicesystem.auth;
 
-import com.czarnecki.clinicservicesystem.user.User;
+import com.czarnecki.clinicservicesystem.user.vo.UserSnapshot;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,18 +17,18 @@ public class CustomUserDetails implements UserDetails {
     private final boolean isActive;
     private final Collection<? extends GrantedAuthority> authorities;
 
-    CustomUserDetails(User user) {
+    CustomUserDetails(UserSnapshot user) {
 
         final Set<GrantedAuthority> userAuthorities =
-                user.getRole().getAuthorities()
+                user.role().authorities()
                         .stream()
-                        .map(authority -> new SimpleGrantedAuthority(authority.getCode()))
+                        .map(authority -> new SimpleGrantedAuthority(authority.code()))
                         .collect(Collectors.toSet());
 
-        id = user.getId();
-        username = user.getUsername();
-        password = user.getPassword();
-        emailAddress = user.getEmailAddress();
+        id = user.id();
+        username = user.username();
+        password = user.password();
+        emailAddress = user.emailAddress();
         isActive = user.isActive();
         authorities = userAuthorities;
     }

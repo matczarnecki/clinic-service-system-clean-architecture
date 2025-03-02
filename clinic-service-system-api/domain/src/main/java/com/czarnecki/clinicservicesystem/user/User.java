@@ -3,7 +3,7 @@ package com.czarnecki.clinicservicesystem.user;
 import com.czarnecki.clinicservicesystem.Aggregate;
 import com.czarnecki.clinicservicesystem.user.vo.UserSnapshot;
 
-public class User implements Aggregate<Integer, UserSnapshot> {
+class User implements Aggregate<Integer, UserSnapshot> {
 
     static User from(final UserSnapshot userSnapshot) {
         return new User(userSnapshot.id(), userSnapshot.username(), userSnapshot.password(),

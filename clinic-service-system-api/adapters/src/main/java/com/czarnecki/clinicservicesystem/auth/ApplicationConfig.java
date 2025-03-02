@@ -1,6 +1,5 @@
 package com.czarnecki.clinicservicesystem.auth;
 
-import com.czarnecki.clinicservicesystem.user.User;
 import com.czarnecki.clinicservicesystem.user.UserFacade;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +25,7 @@ class ApplicationConfig {
     @Bean
     UserDetailsService customUserDetailsService() {
         return username -> {
-            User user = userFacade.findByUsername(username)
+            var user = userFacade.findByUsername(username)
                     .orElseThrow(() -> new UsernameNotFoundException("Not found: " + username));
             return new CustomUserDetails(user);
         };
